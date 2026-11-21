@@ -100,10 +100,10 @@ Die Bedingungen waren für alle vier Läufe gleich:
 
 | Karte | Modell | je Antwort (Median) | Antwort beginnt | Fragen/Min. | Werkzeugaufrufe | richtige Fundstelle | Link auf PDF |
 |---|---|---:|---:|---:|---:|---:|---:|
-| Tesla P40 (ältere Rechenkarte) | Gemma 4 26B-A4B | 14,6 s | 5,7 s | ≈ 4 | 1,2 | 8/10 | 1/10 |
-| Tesla P40 (ältere Rechenkarte) | Qwen3.8-27B | 108 s | 65 s | ≈ 0,5 | 5,1 | 8/10 | 9/10 |
-| RTX 4090 (Spiele-Grafikkarte) | Gemma 4 26B-A4B | 4,3 s | 1,6 s | ≈ 14 | 1,3 | 8/10 | 0/10 |
-| RTX 4090 (Spiele-Grafikkarte) | Qwen3.8-27B | 18,5 s | 6,3 s | ≈ 3 | 3,5 | 9/10 | 10/10 |
+| Tesla P40 | Gemma 4 26B-A4B | 14,6 s | 5,7 s | ≈ 4 | 1,2 | 8/10 | 1/10 |
+| Tesla P40 | Qwen3.8-27B | 108 s | 65 s | ≈ 0,5 | 5,1 | 8/10 | 9/10 |
+| RTX 4090 | Gemma 4 26B-A4B | 4,3 s | 1,6 s | ≈ 14 | 1,3 | 8/10 | 0/10 |
+| RTX 4090 | Qwen3.8-27B | 18,5 s | 6,3 s | ≈ 3 | 3,5 | 9/10 | 10/10 |
 
 **Schnelligkeit:**
 
@@ -114,7 +114,7 @@ Die Bedingungen waren für alle vier Läufe gleich:
 | belegter Grafikspeicher | 17,3 GB | 16,8 GB | ca. 17,5 GB | ca. 17 GB |
 
 **Was auffällt:**
-- **Gemma 4 26B-A4B** ist ein Mixture-of-Experts-Modell: Je Wort rechnet nur ein kleiner Teil seiner Parameter. Es ist deshalb schon auf der älteren Tesla P40 flott. Es sucht meist nur einmal und antwortet dann direkt aus den Fundstellen, knapp und sauber gegliedert, setzt aber kaum Links auf die PDF-Seite. Mit einer klareren Anweisung ließe sich das vermutlich beheben. Einmal verwies es auf eine falsche Gliederungsnummer.
+- **Gemma 4 26B-A4B** ist ein Mixture-of-Experts-Modell: Je Wort rechnet nur ein kleiner Teil seiner Parameter. Es ist deshalb schon auf der Tesla P40 flott. Es sucht meist nur einmal und antwortet dann direkt aus den Fundstellen, knapp und sauber gegliedert, setzt aber kaum Links auf die PDF-Seite. Mit einer klareren Anweisung ließe sich das vermutlich beheben. Einmal verwies es auf eine falsche Gliederungsnummer.
 - **Qwen3.8-27B** rechnet je Wort alle Parameter. Es recherchiert gründlicher, liest Abschnitte nach, zitiert mehr im Wortlaut und verlinkt fast immer. Auf der P40 ohne Tensor-Kerne ist es dafür sehr langsam. Dort brach es eine Frage nach 16 Werkzeugaufrufen ab, weil es im falschen Teil suchte. Auf der RTX 4090 beantwortete es alle 10 Fragen in unter 25 Sekunden.
 - **Speicher:** Mit 24 GB passt neben dem Modell genau eine Unterhaltung mit 32.000 Token. Mehr Fragen pro Minute bedeuten also kürzere Wartezeiten in der Schlange, nicht mehr gleichzeitige Unterhaltungen.
 
