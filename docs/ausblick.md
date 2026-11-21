@@ -74,7 +74,7 @@ Der Modellserver (llama-server, LM Studio) liefert Werkzeugaufrufe nur als Vorsc
 - Ein Modell mit Werkzeugaufrufen und mindestens 32.000 Token Kontext, weil die Antworten der Schnittstelle lang sein können. In Frage kommen etwa Gemma 4 26B-A4B (Q4_K_M, 17 GB) oder ein Qwen3-Modell.
 - Der Vermittler, als kleines Python- oder PHP-Programm.
 - Eine gesicherte Verbindung vom Webserver zu diesem Rechner, etwa über einen SSH-Tunnel oder WireGuard. Der Rechner muss dauerhaft laufen.
-- Eine Warteschlange: Mit 24 GB läuft eine Unterhaltung zur Zeit. Je nach Karte und Modell schafft sie etwa 3 bis 14 Fragen pro Minute (siehe [Probelauf](#probelauf)).
+- Eine Warteschlange: Mit 24 GB läuft eine Unterhaltung zur Zeit. Je nach Karte und Modell schafft sie etwa 3 bis 14 Fragen pro Minute (siehe [Einschätzung nach einem Testlauf](#probelauf)).
 
 **Abwägung**
 
@@ -82,9 +82,10 @@ Der Modellserver (llama-server, LM Studio) liefert Werkzeugaufrufe nur als Vorsc
 - Kleinere Modelle halten die Zitierregeln weniger sicher ein und verlieren bei langen Werkzeugantworten eher den Faden. Vor einer Freigabe sollten die Antworten mit dem [Testsatz](../messung/testsatz.json) geprüft werden, auf Fundstelle, Seitenangabe und Trennung von Beleg und Bewertung.
 - Strom, Wartung und Ausfälle des eigenen Rechners sind zu bedenken.
 
-## Probelauf
+<a id="probelauf"></a>
+## Lokale Hardware: Einschätzung nach einem Testlauf
 
-Für Fall 2 gab es am 21. November 2026 einen Probelauf mit [`messung/chat_probe.py`](../messung/chat_probe.py). Das Skript ist zugleich ein einfacher Vermittler. Getestet wurden zwei Grafikkarten mit je 24 GB und zwei frei verfügbare Modelle mit denselben 10 Fragen aus dem Testsatz. Jede Frage lief als echter Chat: Das Modell rief die Werkzeuge der Schnittstelle selbst auf und antwortete mit Seitenangaben.
+Für Fall 2 gab es am 21. November 2026 einen Testlauf auf lokaler Hardware mit [`messung/chat_probe.py`](../messung/chat_probe.py). Das Skript ist zugleich ein einfacher Vermittler. Getestet wurden zwei Grafikkarten mit je 24 GB und zwei frei verfügbare Modelle mit denselben 10 Fragen aus dem Testsatz. Jede Frage lief als echter Chat: Das Modell rief die Werkzeuge der Schnittstelle selbst auf und antwortete mit Seitenangaben.
 
 Die Bedingungen waren für alle vier Läufe gleich:
 - Modell vollständig im Grafikspeicher, gestartet mit `-ngl 99 -fit off`,
