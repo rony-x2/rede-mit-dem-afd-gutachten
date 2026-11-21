@@ -170,3 +170,38 @@ pre.code { margin: 0; padding: 12px 14px; overflow-x: auto; border: 1px solid va
 @media (prefers-reduced-motion: reduce) {
   .g, .g.aktiv { transition: none; }
 }
+
+/* Diagramm „Wie es gemacht ist“ (seite/diagramm.py): quer ab 641 px, hoch auf dem Smartphone */
+.diagramm { margin: 4px 0 clamp(24px, 3vw, 40px); }
+.diagramm svg { display: block; width: 100%; height: auto; margin: 0 auto; }
+.diagramm .d-quer { max-width: 1180px; }
+.diagramm .d-hoch { display: none; max-width: 460px; }
+.aufbau-text { align-items: start; }
+
+/* Offener Quelltext */
+.quelltext { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(22px, 4vw, 64px); align-items: center;
+  padding: clamp(22px, 3.2vw, 44px); border: 1px solid var(--linie); border-radius: 18px;
+  background: radial-gradient(120% 140% at 0% 0%, color-mix(in oklab, var(--projekt) 9%, var(--flaeche)) 0%, var(--flaeche) 55%); }
+.quelltext h2 { margin-bottom: 14px; font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+.qt-zeichen { width: 1.15em; height: 1.15em; color: var(--projekt); }
+.qt-kopf > p:first-of-type { margin: 0; font-size: clamp(1rem, 1.2vw, 1.08rem); max-width: 56ch; }
+.qt-knoepfe { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.knopf { display: inline-flex; align-items: center; gap: 9px; min-height: 46px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--akzent);
+  background: color-mix(in oklab, var(--akzent) 16%, transparent); color: var(--text); font-weight: 600; text-decoration: none; transition: background .2s, transform .2s; }
+.knopf .ikon { width: 1.15em; height: 1.15em; color: var(--akzent); }
+.knopf:hover, .knopf:focus-visible { background: color-mix(in oklab, var(--akzent) 28%, transparent); transform: translateY(-1px); }
+.knopf.leise { border-color: var(--linie); background: transparent; }
+.knopf.leise:hover, .knopf.leise:focus-visible { border-color: var(--akzent); }
+.qt-pfad { margin: 12px 0 0; font-family: var(--mono); font-size: .82rem; overflow-wrap: anywhere; }
+.qt-teile { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.qt-teile li { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border: 1px solid var(--linie); border-radius: var(--radius); background: var(--bg); font-size: .92rem; line-height: 1.45; }
+.qt-teile b { color: var(--text); font-size: 1rem; }
+.qt-teile code { margin-top: auto; padding-top: 4px; font-size: .8rem; color: var(--projekt); }
+@media (max-width: 960px) { .quelltext { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .diagramm .d-quer { display: none; }
+  .diagramm .d-hoch { display: block; }
+  .qt-teile { grid-template-columns: 1fr; }
+  .knopf { flex: 1 1 auto; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .knopf { transition: none; } .knopf:hover { transform: none; } }

@@ -4,16 +4,10 @@
 
 ## Ablauf einer Anfrage
 
-```mermaid
-flowchart TD
-    F[Frage] --> V[mit Anweisung einbetten<br>Qwen3-Embedding-0.6B, 384 Dim.]
-    V --> Q1[1. erzeugte Fragen<br>exakt, zweistufig]
-    V --> Q2[2. Originaltext<br>Vektorindex]
-    F --> Q3[3. Volltext<br>MariaDB FULLTEXT]
-    Q1 & Q2 & Q3 --> R[Reciprocal Rank Fusion<br>Gewichte 1,0 / 0,35 / 0,25]
-    R --> A[Ausschnitt und Nähe<br>aus dem Originaltext]
-    V --> G[Angaben zur GFF<br>nur bei passender Frage]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="bilder/suche-dunkel.svg">
+  <img alt="Ablauf einer Anfrage: Die Frage wird eingebettet und gegen erzeugte Fragen und Originaltext gesucht, ihre Wörter zusätzlich im Volltext; Rank Fusion verbindet die drei Listen zu den Fundstellen. Angaben zur GFF kommen nur bei passender Frage dazu." src="bilder/suche-hell.svg" width="100%">
+</picture>
 
 1. **Einbetten:** Die Frage erhält die Anweisung `AFD_VEK_ANWEISUNG` vorangestellt und wird eingebettet. Auf der CPU dauert das etwa 0,15 Sekunden.
 2. **Erzeugte Fragen:** Zu jedem Textteil gibt es drei bis fünf vorab erzeugte Fragen, zusammen 45.775 (siehe [aufbereitung.md](aufbereitung.md#5-anreicherung-mit-fragen)). Die Suche läuft exakt und in zwei Stufen:

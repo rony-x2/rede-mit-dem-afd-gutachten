@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#0f1115">
   <link rel="stylesheet" href="/style.css?v=4">
-  <link rel="stylesheet" href="seite.css?v=10">
+  <link rel="stylesheet" href="seite.css?v=11">
 </head>
 <body>
   <header class="kopf">
@@ -22,6 +22,7 @@
       <nav aria-label="Hauptnavigation">
         <a href="#einrichten">Einrichten</a>
         <a href="#werkzeuge">Werkzeuge</a>
+        <a href="#quelltext">Quelltext</a>
         <a href="#datenschutz">Datenschutz</a>
         <a href="/">Alle PoCs</a>
       </nav>
@@ -241,17 +242,41 @@
       </ul>
     </section>
 
-    <section class="block raster zwei">
-      <div>
-        <h2>Wie es gemacht ist</h2>
+    <section class="block" id="aufbau">
+      <h2>Wie es gemacht ist</h2>
+      <figure class="diagramm">
+{{DIAGRAMM}}
+      </figure>
+      <div class="raster zwei aufbau-text">
+        <div>
         <p>Grundlage ist die PDF der GFF. Ein Parser liest das Satzbild aus: Überschriften anhand von Schrift und Einzug, Fußnoten anhand des Trennstrichs und der hochgestellten Verweise, gedruckte Seitenzahlen aus dem Seitenkopf. Daraus entsteht eine Datenbank, in der jeder Absatz seinen Abschnitt, seine Seite und seine Fußnoten kennt. Für Gliederung, Seiten und Fußnoten braucht es kein Sprachmodell.</p>
         <p>Für die Suche nach Bedeutung sind rund 14.000 Textabschnitte lokal als Vektoren berechnet (Qwen3-Embedding-0.6B auf eigener Hardware, ohne Cloud-Dienst). Damit auch Fragen in Alltagssprache treffen, hat ein lokales Sprachmodell (Gemma&nbsp;4) zu jedem Abschnitt einige Fragen geschrieben, die er beantwortet; sie dienen nur der Suche, die Antworten kommen immer aus dem Originaltext. Den Wortlaut der geprüften Norm, Art.&nbsp;21 des Grundgesetzes, hält die Schnittstelle getrennt vom Gutachten vor und kennzeichnet ihn als Gesetzestext. Ebenso getrennt stehen Angaben über die Herausgeberin: Autor*innen, Initiative und Finanzierung laut Gutachten sowie eigene Zusammenfassungen der Selbstdarstellung der GFF und des Wikipedia-Artikels, jeweils mit Quelle und Stand.</p>
-        <div class="mit-ikon-absatz">{{ikon:code}}<p>Der Quelltext steht unter MIT-Lizenz auf GitHub: Parser, Aufbereitung, Schnittstelle, diese Seite und die Messungen der Suche, mit ausführlicher Dokumentation – <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten">rony-x2/rede-mit-dem-afd-gutachten</a>.</p></div>
-      </div>
-      <div class="hinweisbox">
-        <h2>Quelle und Lizenz</h2>
+        </div>
+        <div class="hinweisbox">
+          <h2>Quelle und Lizenz</h2>
         <p>Gesellschaft für Freiheitsrechte e.V., „Ist die Alternative für Deutschland verfassungswidrig?“, Rechtsgutachten vom 25. Juni 2026 (<a href="https://freiheitsrechte.org/themen/starke-grundrechte-fuer-eine-lebendige-demokratie/afd-gutachten">freiheitsrechte.org</a>, <a href="https://afd-gutachten.de/">afd-gutachten.de</a>), lizenziert unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>. Belegdatenbank: <a href="https://fragdenstaat.de/afd-datenbank/">FragDenStaat</a>.</p>
         <p><strong>Bearbeitung:</strong> Maschinelle Aufbereitung (Gliederung, Seitenzuordnung, Fußnoten) durch Dennis Deutschkämer auf Grundlage der PDF-Fassung vom 6. Oktober 2026. Inoffiziell und ohne Gewähr – maßgeblich ist die PDF der GFF. Dies ist ein unabhängiger Prototyp, kein Angebot der GFF.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="quelltext">
+      <div class="quelltext">
+        <div class="qt-kopf">
+          <h2 class="mit-logo">{{ikon:code:ikon qt-zeichen}}Offener Quelltext</h2>
+          <p>Alles, was diesen Prototyp ausmacht, liegt offen auf GitHub – unter MIT-Lizenz, mit ausführlicher Dokumentation auf Deutsch. Wer das Verfahren prüfen, nachbauen oder auf ein anderes Dokument übertragen möchte, findet dort jeden Schritt.</p>
+          <div class="qt-knoepfe">
+            <a class="knopf" href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten">{{ikon:code}}Auf GitHub ansehen</a>
+            <a class="knopf leise" href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten/tree/main/docs">Dokumentation</a>
+          </div>
+          <p class="qt-pfad">github.com/rony-x2/rede-mit-dem-afd-gutachten</p>
+        </div>
+        <ul class="qt-teile">
+          <li><b>Aufbereitung</b><span>PDF auslesen, Gliederung, Seiten und Fußnoten erkennen, Textteile einbetten, typische Fragen erzeugen</span><code>aufbereitung/</code></li>
+          <li><b>Schnittstelle</b><span>MCP-Server in PHP mit allen Werkzeugen, Datenbankschema und Importskripte</span><code>server/</code></li>
+          <li><b>Suche</b><span>Verfahren der Bedeutungssuche, Testsatz mit 46 Fragen und alle Messungen</span><code>docs/suche.md</code></li>
+          <li><b>Diese Seite</b><span>Vorlage, Bauskript, Gestaltung und dieses Diagramm als SVG</span><code>seite/</code></li>
+        </ul>
       </div>
     </section>
 

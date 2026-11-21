@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Baut index.html der Projektseite aus vorlage.html: Logos inline, Piktogramme, Unterhaltung."""
 import html, re, sys
+
+from diagramm import diagramm_seite
 from pathlib import Path
 
 HIER = Path(__file__).parent
@@ -106,6 +108,7 @@ text = text.replace('{{PUNKTE}}', '\n'.join(
 text = text.replace('{{BEISPIELE}}', '\n'.join(
     f'          <li>{ikon("frage")}<span>{h(b)}</span></li>' for b in BEISPIELE))
 text = text.replace('{{ADRESSE}}', ADRESSE)
+text = text.replace('{{DIAGRAMM}}', diagramm_seite())
 text = re.sub(r'\{\{logo:([^:}]+)(?::([^}]+))?\}\}', lambda m: logo(m[1], m[2] or 'logo'), text)
 text = re.sub(r'\{\{ikon:([^:}]+)(?::([^}]+))?\}\}', lambda m: ikon(m[1], m[2] or 'ikon'), text)
 assert '{{' not in text, re.findall(r'\{\{[^}]*\}\}', text)

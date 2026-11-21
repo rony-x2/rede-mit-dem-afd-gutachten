@@ -17,6 +17,7 @@ Hochgeladen werden `index.html`, `seite.css` und `seite.js`, zusammen mit dem In
 | `{{ikon:name:klasse}}` | Strichpiktogramm aus `IKONEN` in `bauen.py` (24 × 24, `currentColor`) |
 | `{{GESPRAECHE}}`, `{{PUNKTE}}` | animierte Beispielunterhaltungen aus `GESPRAECHE` und ihre Umschaltpunkte |
 | `{{BEISPIELE}}` | Liste „Fragen zum Ausprobieren“ |
+| `{{DIAGRAMM}}` | Ablaufdiagramm aus `seite/diagramm.py`, quer und hochkant (Smartphone), Farben aus den CSS-Variablen |
 
 `bauen.py` bricht ab, wenn ein Platzhalter übrig bleibt oder ein Geviertstrich im Text steht.
 
@@ -32,3 +33,13 @@ Die Beispielunterhaltungen in `GESPRAECHE` sind echte Antworten der Schnittstell
 ## Zeichen
 
 Das Projektzeichen ist eine Sprechblase mit Waage. Es gehört zu einer Familie für die Proofs of Concept auf poc.deutschkaemer.info: Die Sprechblase steht für „Rede mit …“, das Zeichen innen für das Projekt, und PoCs ohne Chat bekommen ein abgerundetes Quadrat. `seite/zeichen/familie.py` erzeugt die Varianten als Linien- und Kachelfassung. Favicon und App-Zeichen liegen in `server/web/`. Die Projektfarbe ist ein Rostrot (`--projekt`, #b5523b hell bzw. #da6e55 dunkel). Sie hebt sich bewusst von den übrigen Akzentfarben ab.
+
+## Diagramme
+
+`seite/diagramm.py` zeichnet das Ablaufdiagramm aus einer Quelle für beide Orte: `bauen.py` bettet es inline in die Seite ein, dort richten sich die Farben nach den CSS-Variablen (hell, dunkel, Display P3). Auf dem Smartphone erscheint eine hochkant angeordnete Fassung mit etwas größerer Schrift. Für GitHub schreibt
+
+```bash
+cd seite && python3 diagramm.py
+```
+
+feste SVG-Dateien in hell und dunkel nach `docs/bilder/`. Dazu gehört auch das Diagramm zur Suche in `docs/suche.md`.

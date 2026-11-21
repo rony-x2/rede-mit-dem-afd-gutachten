@@ -29,17 +29,10 @@ Die Schnittstelle gibt dem Modell Regeln für die Antwort mit: Es soll nur wiede
 
 ## Wie es funktioniert
 
-```mermaid
-flowchart LR
-    PDF[PDF der GFF] --> P[extract.py / parse.py<br>Gliederung, Seiten, Fußnoten]
-    P --> DB[(MariaDB<br>Text + Volltextindex)]
-    P --> T[teilen.py] --> E[Einbettung<br>Qwen3-Embedding-0.6B]
-    P --> A[anreichern.py<br>Gemma 4 schreibt typische Fragen] --> E
-    E --> DB
-    K[Claude, ChatGPT, Grok, LM Studio …] -- MCP über HTTPS --> S[mcp_server.php]
-    S --> DB
-    S -- Frage einbetten --> V[Einbettungsdienst<br>lokal auf der CPU]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/bilder/ablauf-dunkel.svg">
+  <img alt="Ablauf: Einmalig wird die PDF gegliedert, in Textteile zerlegt und mit typischen Fragen angereichert; alles wird eingebettet und in MariaDB gespeichert. Bei jeder Frage ruft ein KI-Assistent die MCP-Schnittstelle auf, die die Frage einbettet und in der Datenbank sucht." src="docs/bilder/ablauf-hell.svg" width="100%">
+</picture>
 
 1. **Aufbereitung:** Die PDF wird einmal ausgelesen. Das Layout liefert Seitenzahlen, Überschriften, Fußnoten und Belegzitate. Das Ergebnis geht als Tabellen in MariaDB ([docs/aufbereitung.md](docs/aufbereitung.md)).
 2. **Vektoren:** Jeder Absatz wird mit Qwen3-Embedding-0.6B eingebettet. Zusätzlich hat ein lokales Sprachmodell zu jedem Absatz drei bis fünf Fragen geschrieben, die er beantwortet. Insgesamt sind das 45.775 Fragen, und auch sie werden eingebettet.
@@ -55,7 +48,7 @@ flowchart LR
 | [`server/web/`](server/web) | öffentlicher Teil: Einstieg `mcp.php`, Umleitung, Zeichen und Favicons |
 | [`seite/`](seite) | Projektseite: Vorlage, Bauskript, CSS, JavaScript, Logos |
 | [`messung/`](messung) | Testsatz mit 46 Fragen und Skripte für die Suchmessungen |
-| [`docs/`](docs) | ausführliche Dokumentation |
+| [`docs/`](docs) | ausführliche Dokumentation, Diagramme unter `docs/bilder/` (erzeugt von `seite/diagramm.py`) |
 
 ## Dokumentation
 
