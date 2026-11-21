@@ -220,7 +220,32 @@ def suche(thema, praefix='ds'):
     z.pfeil([(930, 145), (968, 145)], betrieb=True)
     z.pfeil([(690, 335), (1070, 335), (1070, 182)], betrieb=True)
     z.text(185, 230, 'Wörter der Frage', anker='start')
-    return z.svg(1190, 390, thema)
+    return z.svg(1190, 390, thema, 'd-quer')
+
+
+def suche_hoch(thema, praefix='dsh'):
+    """Hochkant-Fassung der Suche fürs Smartphone (Projektseite)."""
+    z = Zeichnung(praefix)
+    z.kasten(('Frage', 'in eigenen Worten', None), 130, 16, 200)
+    z.kasten(('Frage einbetten', 'mit Suchanweisung', None), 130, 110, 200)
+    z.bahn(14, 208, 432, 300, 'Drei Ranglisten')
+    z.kasten(('Erzeugte Fragen', '64 Dim. vorwählen, 384 sortieren', 'afd_frage_vektor'), 40, 242, 380)
+    z.kasten(('Originaltext', 'Vektorindex, 300 Textteile', 'afd_vektor'), 40, 330, 380)
+    z.kasten(('Volltext', 'Wörter der Frage, FULLTEXT', 'afd_absatz'), 40, 418, 380)
+    z.kasten(('Rank Fusion', '1,0 · 0,35 · 0,25', None), 20, 538, 200)
+    z.kasten(('Angaben zur GFF', 'nur bei passender Frage', None), 240, 538, 200)
+    z.kasten(('Fundstellen', 'Seite, Ausschnitt, PDF-Link', None), 130, 650, 200)
+    z.pfeil([(230, 86), (230, 108)])
+    z.pfeil([(230, 180), (230, 206)])
+    z.pfeil([(330, 145), (452, 145), (452, 520), (340, 520), (340, 536)])
+    z.pfeil([(120, 508), (120, 536)], betrieb=True)
+    z.pfeil([(120, 608), (120, 628), (230, 628), (230, 648)], betrieb=True)
+    z.pfeil([(340, 608), (340, 628), (230, 628)], betrieb=True, spitze=False)
+    return z.svg(460, 730, thema, 'd-hoch', gross=True)
+
+
+def suche_seite():
+    return suche('seite', 'dsq') + suche_hoch('seite')
 
 
 def diagramm_seite():

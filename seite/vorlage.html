@@ -260,6 +260,15 @@
       </div>
     </section>
 
+    <section class="block" id="suche">
+      <h2>So findet die Suche die passende Stelle</h2>
+      <p class="breit">Eine Frage in eigenen Worten wird von einem lokalen Modell (Qwen3-Embedding) in einen Vektor umgerechnet und auf drei Wegen gesucht: unter den vorab erzeugten typischen Fragen, im Originaltext und im Volltext. Die drei Ranglisten werden zu einer zusammengeführt, die Fragen zählen dabei am meisten. Angaben zur GFF kommen nur dazu, wenn eine Frage erkennbar auf die Herausgeberin zielt.</p>
+      <figure class="diagramm">
+{{SUCHE}}
+      </figure>
+      <p class="breit klein">Gemessen mit 46 Testfragen in Alltagssprache: Die richtige Stelle steht bei 25 Fragen auf Platz 1 und bei 44 unter den ersten zehn Treffern (vorher, nur mit Originaltext und Volltext: 16 und 36). Verfahren, Messungen und Begründung: <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten/blob/main/docs/suche.md">docs/suche.md</a>.</p>
+    </section>
+
     <section class="block" id="quelltext">
       <div class="quelltext">
         <div class="qt-kopf">
@@ -302,7 +311,7 @@
           </ul>
           <dl class="eckdaten">
             <div><dt>Antworten</dt><dd>hohe Qualität, Zitierregeln werden in der Regel eingehalten</dd></div>
-            <div><dt>Kosten</dt><dd>je Frage geschätzt 0,3 Cent (Haiku 5.5) bis 6 Cent (Sonnet 5.5); 1.000 Fragen etwa 3 bis 60 US-Dollar</dd></div>
+            <div><dt>Kosten</dt><dd>je Frage geschätzt rund 0,3 Cent (Haiku 5.5) bis 5,5 Cent (Sonnet 5.5); 1.000 Fragen etwa 3 bis 55 Euro</dd></div>
             <div><dt>Last</dt><dd>trägt der Anbieter; die Grenze setzt das Budget</dd></div>
             <div><dt>Aufwand</dt><dd>gering, etwa ein bis zwei Tage</dd></div>
             <div><dt>Datenschutz</dt><dd>die Fragen verarbeitet der Anbieter in den USA</dd></div>

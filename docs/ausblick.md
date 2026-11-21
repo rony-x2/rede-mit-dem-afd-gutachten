@@ -44,13 +44,13 @@ Eine typische Frage braucht zwei bis vier Werkzeugaufrufe. Bei jedem Schritt wir
 | nach `abschnitt_lesen` (≈ 8.000 Token Ergebnis) | 14.500 |
 | **zusammen** | **≈ 25.000** |
 
-Dazu kommen rund 1.000 Token Ausgabe. Listenpreise im November 2026, je Million Token:
+Dazu kommen rund 1.000 Token Ausgabe. Die Listenpreise je Million Token stehen in US-Dollar (Stand November 2026). Umgerechnet ist mit rund 1,10 US-Dollar je Euro (EZB-Referenzkurs Mitte November 2026: 1,0989):
 
 | Modell | Eingabe | Ausgabe | je Frage | 1.000 Fragen |
 |---|---:|---:|---:|---:|
-| Claude Haiku 5.5 | 0,10 $ | 0,50 $ | ≈ 0,3 Cent | ≈ 3 $ |
-| Claude Sonnet 5.5 | 2 $ | 10 $ | ≈ 6 Cent | ≈ 60 $ |
-| Claude Opus 5.5 | 4 $ | 20 $ | ≈ 12 Cent | ≈ 120 $ |
+| Claude Haiku 5.5 | 0,10 US-$ | 0,50 US-$ | ≈ 0,3 Cent | ≈ 3 € |
+| Claude Sonnet 5.5 | 2 US-$ | 10 US-$ | ≈ 5,5 Cent | ≈ 55 € |
+| Claude Opus 5.5 | 4 US-$ | 20 US-$ | ≈ 11 Cent | ≈ 110 € |
 
 Mit Prompt-Caching für Anweisungen und Werkzeugliste sinken die Eingabekosten weiter. Lange Abschnitte erhöhen sie. Quelle der Preise: [Claude-Preisliste](https://platform.claude.com/docs/en/about-claude/pricing).
 
