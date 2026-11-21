@@ -27,7 +27,7 @@ BAHN_A = 'Einmalig: Aufbereitung'
 BAHN_B = 'Bei jeder Frage'
 TITEL = 'Aufbau von „Rede mit dem AfD-Gutachten“'
 BESCHREIBUNG = ('Einmalig wird die PDF der GFF vom Parser gegliedert und in Textteile zerlegt; ein lokales Sprachmodell '
-                'schreibt typische Fragen dazu. Beides wird zu Vektoren und landet mit Text, Fußnoten und Volltextindex '
+                'schreibt typische Fragen dazu. Beides wird mit einem lokalen Einbettungsmodell zu Vektoren und landet mit Text, Fußnoten und Volltextindex '
                 'in MariaDB. Bei jeder Frage ruft ein KI-Assistent die MCP-Schnittstelle auf; sie bettet die Frage ein, '
                 'sucht in der Datenbank und liefert Fundstellen mit Seite und Link zurück.')
 
@@ -43,6 +43,9 @@ STIL_KLASSEN = '''
 .d-p.b{stroke:%(akzent)s;stroke-width:1.6}
 .d-s{fill:%(leise)s}.d-s.b{fill:%(akzent)s}
 .d-l{fill:%(leise)s;font-size:11.5px}.d-l.b{fill:%(akzent)s}
+.d-chip{fill:%(flaeche)s;stroke:%(akzent)s;stroke-width:1.1}
+.d-chiptext{fill:%(akzent)s;font-size:10.5px;font-weight:600;letter-spacing:.02em}
+.d-hinweis{fill:%(akzent)s;font-size:11.5px;font-weight:600}
 '''
 SCHRIFT = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif'
 MONO = 'ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,monospace'
@@ -79,6 +82,16 @@ class Zeichnung:
         for i, (txt, k) in enumerate(zeilen):
             s.append(f'<text class="{k}" x="{cx:g}" y="{y0 + i * 18:g}" text-anchor="middle">{escape(txt)}</text>')
         self.teile.append(''.join(s))
+
+    def chip(self, x, y, w, txt='lokale KI'):
+        """Kleines Schild oben rechts auf einem Kasten (x, y, w: Lage des Kastens)."""
+        b = len(txt) * 6.2 + 16
+        cx = x + w - 12 - b
+        self.teile.append(f'<rect class="d-chip" x="{cx:g}" y="{y - 9}" width="{b:g}" height="18" rx="9"/>'
+                          f'<text class="d-chiptext" x="{cx + b / 2:g}" y="{y + 4}" text-anchor="middle">{escape(txt)}</text>')
+
+    def hinweis(self, x, y, txt, anker='end'):
+        self.teile.append(f'<text class="d-hinweis" x="{x}" y="{y}" text-anchor="{anker}">{escape(txt)}</text>')
 
     def zylinder(self, x, y, w, h):
         ry = 13
@@ -127,6 +140,9 @@ def quer(thema, praefix='dq'):
     z.kasten('teilen', 430, 52, 200)
     z.kasten('fragen', 430, 168, 200)
     z.kasten('vektor', 670, 110, 170)
+    z.chip(430, 168, 200)
+    z.chip(670, 110, 170)
+    z.hinweis(844, 26, 'KI-Modelle laufen lokal auf eigener Hardware, ohne Cloud-Dienst')
     z.zylinder(880, 160, 150, 250)
     z.pfeil([(150, 145), (178, 145)])
     z.pfeil([(390, 145), (410, 145), (410, 87), (428, 87)])
@@ -139,13 +155,14 @@ def quer(thema, praefix='dq'):
     z.kasten('assist', 20, 355, 240)
     z.kasten('server', 670, 355, 170)
     z.kasten('einbett', 655, 455, 200)
+    z.chip(655, 455, 200)
     z.pfeil([(260, 380), (668, 380)], betrieb=True)
     z.pfeil([(670, 402), (262, 402)], betrieb=True)
     z.text(465, 372, 'Frage und Werkzeugaufrufe · MCP über HTTPS', betrieb=True)
     z.text(465, 420, 'Fundstellen mit Seite und Link', betrieb=True)
     z.pfeil([(842, 390), (878, 390)], betrieb=True, beide=True)
     z.pfeil([(755, 425), (755, 453)], betrieb=True)
-    z.text(765, 444, 'Frage', betrieb=True, anker='start')
+    z.text(745, 444, 'Frage', betrieb=True, anker='end')
     return z.svg(1040, 544, thema, 'd-quer')
 
 
@@ -157,6 +174,9 @@ def hoch(thema, praefix='dh'):
     z.kasten('teilen', 20, 240, 200)
     z.kasten('fragen', 240, 240, 200)
     z.kasten('vektor', 130, 345, 200)
+    z.chip(240, 240, 200)
+    z.chip(130, 345, 200)
+    z.hinweis(440, 24, 'lokale KI, ohne Cloud')
     z.zylinder(150, 440, 160, 104)
     z.pfeil([(230, 110), (230, 133)])
     z.pfeil([(230, 205), (230, 222), (120, 222), (120, 238)])
@@ -169,6 +189,7 @@ def hoch(thema, praefix='dh'):
     z.bahn(4, 560, 452, 248, BAHN_B)
     z.kasten('server', 20, 600, 200)
     z.kasten('einbett', 240, 600, 200)
+    z.chip(240, 600, 200)
     z.kasten('assist', 20, 722, 300)
     z.pfeil([(190, 598), (190, 546)], betrieb=True, beide=True)
     z.pfeil([(220, 635), (238, 635)], betrieb=True)
