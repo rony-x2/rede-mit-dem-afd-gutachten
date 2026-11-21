@@ -1,0 +1,51 @@
+/* Rede mit dem AfD-Gutachten – Kopieren, Beispiel-Unterhaltung, Ablauf */
+for (const b of document.querySelectorAll('[data-kopie]')) {
+  b.addEventListener('click', async () => {
+    const t = document.getElementById(b.dataset.kopie)?.textContent ?? '';
+    const vorher = b.dataset.vorher ??= b.textContent;
+    try { await navigator.clipboard.writeText(t); b.textContent = 'Kopiert'; setTimeout(() => { b.textContent = vorher; }, 1800); } catch {}
+  });
+}
+(() => {
+  const box = document.querySelector('.gespraech');
+  if (!box) return;
+  const gs = [...box.querySelectorAll('.g')], punkte = [...box.querySelectorAll('.g-punkt')];
+  const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0, uhr = 0, tipp = 0, halt = false;
+  const weiter = () => { clearTimeout(uhr); uhr = setTimeout(() => (halt || document.hidden) ? weiter() : zeige(i + 1), 10500); };
+  const zeige = (n) => {
+    clearTimeout(uhr); clearInterval(tipp);
+    const alt = gs[i];
+    alt.classList.remove('aktiv', 'laeuft', 'gefragt'); alt.setAttribute('aria-hidden', 'true');
+    alt.querySelector('.beleg')?.setAttribute('tabindex', '-1');
+    punkte[i]?.setAttribute('aria-current', 'false');
+    i = (n + gs.length) % gs.length;
+    const g = gs[i], f = g.querySelector('.frage-text'), voll = f.dataset.text;
+    punkte[i]?.setAttribute('aria-current', 'true');
+    g.removeAttribute('aria-hidden'); g.querySelector('.beleg')?.removeAttribute('tabindex');
+    g.classList.add('aktiv');
+    if (ruhig) { f.textContent = voll; return; }
+    void g.offsetWidth;
+    g.classList.add('laeuft');
+    f.textContent = '';
+    let k = 0;
+    setTimeout(() => {
+      tipp = setInterval(() => {
+        k += 1; f.textContent = voll.slice(0, k);
+        if (k >= voll.length) { clearInterval(tipp); g.classList.add('gefragt'); weiter(); }
+      }, 32);
+    }, 650);
+  };
+  punkte.forEach((p, n) => p.addEventListener('click', () => zeige(n)));
+  box.addEventListener('mouseenter', () => { halt = true; });
+  box.addEventListener('mouseleave', () => { halt = false; });
+  box.addEventListener('focusin', () => { halt = true; });
+  box.addEventListener('focusout', () => { halt = false; });
+  if (!ruhig) {
+    const start = () => zeige(0);
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { io.disconnect(); start(); } }, { threshold: .4 });
+      io.observe(box);
+    } else start();
+  }
+})();

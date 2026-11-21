@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rede mit dem AfD-Gutachten – Proof of Concept</title>
+  <meta name="description" content="Das Rechtsgutachten der Gesellschaft für Freiheitsrechte zur AfD mit Claude, ChatGPT, Grok oder einem anderen Assistenten befragen: Einrichtung der MCP-Schnittstelle, Antworten mit Seitenangaben.">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="dark light">
+  <meta name="darkreader-lock">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#0f1115">
+  <link rel="stylesheet" href="/style.css?v=4">
+  <link rel="stylesheet" href="seite.css?v=10">
+</head>
+<body>
+  <header class="kopf">
+    <div class="rahmen">
+      <a class="marke" href="/">poc<span>.deutschkaemer.info</span></a>
+      <nav aria-label="Hauptnavigation">
+        <a href="#einrichten">Einrichten</a>
+        <a href="#werkzeuge">Werkzeuge</a>
+        <a href="#datenschutz">Datenschutz</a>
+        <a href="/">Alle PoCs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rahmen">
+    <section class="buehne">
+      <div class="buehne-text">
+        <p class="kicker">Proof of Concept · Prototyp</p>
+        <h1 class="mit-zeichen">{{ikon:projekt:projektzeichen}}<span>Rede mit dem AfD&#8209;Gutachten</span></h1>
+        <p class="lead">Fragen in eigenen Worten stellen, und ein KI-Assistent wie Claude, ChatGPT oder Grok sieht selbst im Rechtsgutachten der Gesellschaft für Freiheitsrechte (GFF) nach – in allen 3.060 Seiten. Er antwortet mit Seitenangabe, Gliederungsnummer und Link auf die passende Stelle der PDF.</p>
+        <p class="adresse-titel">Adresse der Schnittstelle</p>
+        <div class="adresse"><code id="mcp-adresse">{{ADRESSE}}</code><button class="kopieren" type="button" data-kopie="mcp-adresse">Kopieren</button></div>
+        <p class="klein">Liest nur, keine Anmeldung, kostenlos.</p>
+        <div class="anbieter"><span>Funktioniert mit</span>
+          <a href="#claude">{{logo:Claude_AI_symbol.svg}}Claude</a>
+          <a href="#lmstudio">{{logo:lm-studio-icon-color.svg}}LM Studio</a>
+          <a href="#chatgpt">{{logo:OpenAI_logo_2025_(symbol).svg}}ChatGPT</a>
+          <a href="#grok" aria-label="Grok">{{logo:Grok-feb-2025-logo.svg:logo-breit}}</a>
+          <a href="#andere">{{logo:claude-code.svg}}Claude Code</a>
+          <a href="#andere">{{logo:codex-openai.svg}}Codex</a>
+          <a href="#andere">{{ikon:code:ikon logo}}weitere</a>
+        </div>
+      </div>
+
+      <div class="gespraech" aria-roledescription="Beispiel-Unterhaltung">
+        <div class="gespraech-kopf"><span class="lampe"></span>So sieht das aus</div>
+        <div class="g-buehne" aria-live="off">
+{{GESPRAECHE}}
+        </div>
+        <div class="g-fuss">
+          <p>Antworten aus dem Gutachten, gekürzt.</p>
+          <div class="g-punkte" role="group" aria-label="Beispiel wählen">
+{{PUNKTE}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ul class="kennzahlen" aria-label="Umfang der aufbereiteten Daten">
+      <li><b>3.060</b><span>Seiten</span></li>
+      <li><b>2.455</b><span>Gliederungsabschnitte</span></li>
+      <li><b>15.179</b><span>Absätze und Belegzitate</span></li>
+      <li><b>7.467</b><span>Fußnoten</span></li>
+      <li><b>3.533</b><span>Verweise in die FragDenStaat-Belegdatenbank</span></li>
+    </ul>
+
+    <section class="block">
+      <h2>Wie das funktioniert</h2>
+      <ol class="ablauf">
+        <li style="--n:0"><span class="rund">{{ikon:frage}}</span><span><b>Fragen</b>in eigenen Worten, im Chat</span></li>
+        <li style="--n:1"><span class="rund">{{ikon:assistent}}</span><span><b>Assistent sucht</b>mit den Werkzeugen der Schnittstelle</span></li>
+        <li style="--n:2"><span class="rund">{{ikon:gutachten}}</span><span><b>Gutachten</b>Text, Belegzitate und Fußnoten</span></li>
+        <li style="--n:3"><span class="rund">{{ikon:beleg}}</span><span><b>Antwort mit Seite</b>und Link auf die Stelle in der PDF</span></li>
+      </ol>
+      <p class="ablauf-text">Die GFF hat ein über 3.000 Seiten starkes Rechtsgutachten zur Frage veröffentlicht, ob die AfD nach Art.&nbsp;21 Abs.&nbsp;2 GG verfassungswidrig ist. Dieser Prototyp macht den vollständigen Text über eine Schnittstelle nach dem Model Context Protocol (MCP) zugänglich. Ein Assistent, der sie kennt, kann damit selbst im Gutachten nachsehen: das Inhaltsverzeichnis aufklappen, nach Wörtern oder nach Bedeutung suchen, Abschnitte und einzelne Seiten lesen, Fußnoten mit ihren Belegen nachschlagen und den Wortlaut von Art.&nbsp;21 GG abrufen.</p>
+    </section>
+
+    <section class="block" id="einrichten">
+      <h2>Einrichten</h2>
+      <div class="raster vier einrichten">
+        <article class="kachel" id="claude">
+          <h3 class="mit-logo">{{logo:Claude_AI_symbol.svg}}Claude</h3>
+          <p class="unter">claude.ai, Desktop- und Smartphone-App</p>
+          <ol class="schritte">
+            <li>Einstellungen öffnen, dort <strong>Connectors</strong> (bzw. „Anpassen → Connectors“).</li>
+            <li><strong>Benutzerdefinierten Connector hinzufügen</strong> wählen.</li>
+            <li>Name, etwa „AfD-Gutachten“, und die Adresse eintragen; Anmeldung: keine.</li>
+            <li>In einer Unterhaltung über „+“ → Connectors einschalten und einfach fragen.</li>
+          </ol>
+          <p class="note">In Team- und Enterprise-Konten richtet die Organisation Connectors ein. In kostenlosen Konten ist ein benutzerdefinierter Connector möglich.</p>
+        </article>
+        <article class="kachel" id="lmstudio">
+          <h3 class="mit-logo"><span class="lm-dunkel">{{logo:lm-studio-logo-color-white.svg:logo-wort}}</span><span class="lm-hell">{{logo:lm-studio-logo-color-black.svg:logo-wort}}</span><span class="sr-only">LM Studio</span></h3>
+          <p class="unter">Desktop-App mit lokalen Modellen, ab Version 0.3.17</p>
+          <ol class="schritte">
+            <li>In der rechten Seitenleiste den Reiter <strong>Program</strong> öffnen, dann <strong>Install</strong> → <strong>Edit mcp.json</strong>.</li>
+            <li>Den Eintrag einfügen und speichern. Stehen schon Server in der Datei, nur die Zeile mit <code>"afd-gutachten"</code> ergänzen.</li>
+            <li>Ein Modell laden, das Werkzeuge aufrufen kann (etwa Qwen3 oder Gemma 4), mindestens 32k Kontext einstellen und fragen.</li>
+          </ol>
+          <pre class="code">{
+  "mcpServers": {
+    "afd-gutachten": {
+      "url": "{{ADRESSE}}"
+    }
+  }
+}</pre>
+          <p class="note">Die Unterhaltung bleibt auf dem eigenen Rechner; nur die Werkzeugaufrufe gehen an die Schnittstelle. Antworten der Schnittstelle können lang sein, mit zu wenig Kontext bricht das Modell ab.</p>
+        </article>
+        <article class="kachel" id="chatgpt">
+          <h3 class="mit-logo">{{logo:OpenAI_logo_2025_(symbol).svg}}ChatGPT</h3>
+          <p class="unter">chatgpt.com und App</p>
+          <ol class="schritte">
+            <li>Einstellungen → <strong>Apps &amp; Connectors</strong> → Erweiterte Einstellungen: den <strong>Entwicklermodus</strong> einschalten (je nach Tarif und Organisation verfügbar).</li>
+            <li>Dort <strong>Erstellen</strong> wählen, Name und Adresse eintragen, Authentifizierung: keine.</li>
+            <li>In der Unterhaltung über „+“ den Connector auswählen.</li>
+          </ol>
+          <p class="note">Ohne Entwicklermodus nutzt ChatGPT von einer Schnittstelle nur Suche und Abruf; dafür gibt es die Werkzeuge <code>search</code> und <code>fetch</code>. Bezeichnungen der Menüs können sich ändern.</p>
+        </article>
+        <article class="kachel" id="grok">
+          <h3 class="mit-logo">{{logo:Grok-feb-2025-logo.svg:logo-breit}}<span class="sr-only">Grok</span></h3>
+          <p class="unter">grok.com</p>
+          <ol class="schritte">
+            <li>Die <strong>Connectors</strong> öffnen und <strong>New Connector</strong> wählen.</li>
+            <li><strong>Custom</strong> wählen und die Adresse eintragen; eine Anmeldung ist nicht nötig.</li>
+          </ol>
+          <p class="note">In Business- und Enterprise-Konten muss zuerst die Verwaltung den Connector freigeben.</p>
+        </article>
+      </div>
+
+      <h3 class="zwischen mit-logo" id="andere">{{ikon:code:ikon logo}}Andere Programme</h3>
+      <p class="breit">Jedes Programm, das entfernte MCP-Server über „Streamable HTTP“ einbinden kann, funktioniert mit derselben Adresse.</p>
+      <div class="raster vier">
+        <article class="kachel code-kachel">
+          <p class="prog">{{logo:claude-code.svg}}Claude Code</p>
+          <pre class="code">claude mcp add --transport http \
+  afd-gutachten {{ADRESSE}}</pre>
+        </article>
+        <article class="kachel code-kachel">
+          <p class="prog">{{logo:codex-openai.svg}}OpenAI Codex</p>
+          <pre class="code">codex mcp add afd-gutachten \
+  --url {{ADRESSE}}</pre>
+        </article>
+        <article class="kachel code-kachel">
+          <p class="prog">{{ikon:code}}Cursor <code>~/.cursor/mcp.json</code></p>
+          <pre class="code">{
+  "mcpServers": {
+    "afd-gutachten": {
+      "url": "{{ADRESSE}}"
+    }
+  }
+}</pre>
+        </article>
+        <article class="kachel code-kachel">
+          <p class="prog">{{ikon:code}}VS Code <code>.vscode/mcp.json</code></p>
+          <pre class="code">{
+  "servers": {
+    "afd-gutachten": {
+      "type": "http",
+      "url": "{{ADRESSE}}"
+    }
+  }
+}</pre>
+        </article>
+      </div>
+
+      <h3 class="zwischen mit-logo" id="entwickler">{{ikon:werkzeug:ikon logo}}Für eigene Anwendungen</h3>
+      <p class="breit">Die Schnittstellen von Anthropic und OpenAI können entfernte MCP-Server direkt aus einer Anfrage heraus ansprechen. Die Aufrufe kommen dann von deren Servern; eine Anmeldung ist nicht nötig. Alle Werkzeuge lesen nur, eine Freigabe einzelner Aufrufe ist deshalb entbehrlich.</p>
+      <div class="raster zwei">
+        <article class="kachel code-kachel">
+          <p class="prog">{{logo:Claude_AI_symbol.svg}}Claude API (Messages)</p>
+          <p class="unter">Beta-Kopfzeile <code>anthropic-beta: mcp-client-2025-11-20</code></p>
+          <pre class="code">{
+  "model": "MODELL",
+  "max_tokens": 2000,
+  "mcp_servers": [
+    { "type": "url", "name": "afd-gutachten",
+      "url": "{{ADRESSE}}" }
+  ],
+  "tools": [
+    { "type": "mcp_toolset", "mcp_server_name": "afd-gutachten" }
+  ],
+  "messages": [
+    { "role": "user", "content": "Wie begründet das Gutachten sein Ergebnis? Bitte mit Seitenangaben." }
+  ]
+}</pre>
+        </article>
+        <article class="kachel code-kachel">
+          <p class="prog">{{logo:OpenAI_logo_2025_(symbol).svg}}OpenAI API (Responses)</p>
+          <p class="unter">ohne zusätzliche Kopfzeile</p>
+          <pre class="code">{
+  "model": "MODELL",
+  "tools": [
+    {
+      "type": "mcp",
+      "server_label": "afd-gutachten",
+      "server_url": "{{ADRESSE}}",
+      "require_approval": "never"
+    }
+  ],
+  "input": "Welche Maßstäbe legt das Gutachten an das Demokratieprinzip an?"
+}</pre>
+        </article>
+      </div>
+      <p class="note breit">Mit <code>allowed_tools</code> (OpenAI) bzw. <code>default_config</code> und <code>configs</code> im Werkzeugsatz (Anthropic) lässt sich die Auswahl der Werkzeuge einschränken, etwa auf <code>bedeutung_suchen</code> und <code>abschnitt_lesen</code>. Feldnamen und Beta-Kennungen legen die Anbieter fest und können sich ändern; maßgeblich ist ihre Dokumentation.</p>
+    </section>
+
+    <section class="block raster zwei-ungleich">
+      <div>
+        <h2>Fragen zum Ausprobieren</h2>
+        <ul class="beispiele">
+{{BEISPIELE}}
+        </ul>
+      </div>
+      <div>
+        <h2>Gut zu wissen</h2>
+        <div class="mit-ikon-absatz">{{ikon:hinweis}}<p>Das Gutachten ist die rechtliche Bewertung einer zivilgesellschaftlichen Organisation, keine gerichtliche Entscheidung. Die Schnittstelle weist den Assistenten an, wiederzugeben, was das Gutachten feststellt, das als Aussage der GFF kenntlich zu machen und mit Seite zu belegen. Bei Fragen zur Partei selbst soll er zuerst die im Gutachten dokumentierten Äußerungen mit Urheber, Datum und Beleg nennen und davon die rechtliche Bewertung trennen.</p></div>
+        <div class="mit-ikon-absatz">{{ikon:pruefen}}<p>Die Aufbereitung geschieht maschinell und kann Lücken und Fehler haben; maßgeblich ist die PDF der GFF. Was ein Assistent aus den Daten macht, verantwortet er bzw. sein Anbieter. Für belastbare Aussagen die verlinkten Seiten in der PDF prüfen.</p></div>
+        <div class="mit-ikon-absatz">{{ikon:post}}<p>Fehler gefunden? Bitte per E-Mail an <a href="mailto:dennis@deutschkaemer.info">dennis@deutschkaemer.info</a>, mit Seite oder Gliederungsnummer.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="werkzeuge">
+      <h2>Werkzeuge der Schnittstelle</h2>
+      <ul class="werkzeuge">
+        <li><code>ueberblick</code><span>Fragestellung, Umfang, Aufbau, wo Zusammenfassung und Ergebnis stehen</span></li>
+        <li><code>inhaltsverzeichnis</code><span>Gliederung mit Seiten, beliebig tief aufklappbar</span></li>
+        <li><code>bedeutung_suchen</code><span>Frage in eigenen Worten, findet auch andere Formulierungen</span></li>
+        <li><code>suchen</code><span>Volltext in Text, Belegzitaten und Fußnoten, mit Fundstelle</span></li>
+        <li><code>abschnitt_lesen</code><span>Abschnitt im Zusammenhang, mit Seitenmarken und Fußnoten</span></li>
+        <li><code>seite_lesen</code><span>eine gedruckte Seite samt Fußnoten</span></li>
+        <li><code>fussnote</code><span>Fußnoten mit Quelle und Beleg in der FragDenStaat-Datenbank</span></li>
+        <li><code>rechtsgrundlage</code><span>Wortlaut von Art.&nbsp;21 GG, gekennzeichnet als Gesetzestext</span></li>
+        <li><code>herausgeberin</code><span>Wer hinter dem Gutachten steht: Autor*innen, Initiative und Finanzierung laut Gutachten, Angaben über die GFF mit Quelle</span></li>
+        <li><code>search</code> <code>fetch</code><span>Suche und Abruf nach der Konvention von ChatGPT</span></li>
+      </ul>
+    </section>
+
+    <section class="block raster zwei">
+      <div>
+        <h2>Wie es gemacht ist</h2>
+        <p>Grundlage ist die PDF der GFF. Ein Parser liest das Satzbild aus: Überschriften anhand von Schrift und Einzug, Fußnoten anhand des Trennstrichs und der hochgestellten Verweise, gedruckte Seitenzahlen aus dem Seitenkopf. Daraus entsteht eine Datenbank, in der jeder Absatz seinen Abschnitt, seine Seite und seine Fußnoten kennt. Für Gliederung, Seiten und Fußnoten braucht es kein Sprachmodell.</p>
+        <p>Für die Suche nach Bedeutung sind rund 14.000 Textabschnitte lokal als Vektoren berechnet (Qwen3-Embedding-0.6B auf eigener Hardware, ohne Cloud-Dienst). Damit auch Fragen in Alltagssprache treffen, hat ein lokales Sprachmodell (Gemma&nbsp;4) zu jedem Abschnitt einige Fragen geschrieben, die er beantwortet; sie dienen nur der Suche, die Antworten kommen immer aus dem Originaltext. Den Wortlaut der geprüften Norm, Art.&nbsp;21 des Grundgesetzes, hält die Schnittstelle getrennt vom Gutachten vor und kennzeichnet ihn als Gesetzestext. Ebenso getrennt stehen Angaben über die Herausgeberin: Autor*innen, Initiative und Finanzierung laut Gutachten sowie eigene Zusammenfassungen der Selbstdarstellung der GFF und des Wikipedia-Artikels, jeweils mit Quelle und Stand.</p>
+        <div class="mit-ikon-absatz">{{ikon:code}}<p>Der Quelltext steht unter MIT-Lizenz auf GitHub: Parser, Aufbereitung, Schnittstelle, diese Seite und die Messungen der Suche, mit ausführlicher Dokumentation – <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten">rony-x2/rede-mit-dem-afd-gutachten</a>.</p></div>
+      </div>
+      <div class="hinweisbox">
+        <h2>Quelle und Lizenz</h2>
+        <p>Gesellschaft für Freiheitsrechte e.V., „Ist die Alternative für Deutschland verfassungswidrig?“, Rechtsgutachten vom 25. Juni 2026 (<a href="https://freiheitsrechte.org/themen/starke-grundrechte-fuer-eine-lebendige-demokratie/afd-gutachten">freiheitsrechte.org</a>, <a href="https://afd-gutachten.de/">afd-gutachten.de</a>), lizenziert unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>. Belegdatenbank: <a href="https://fragdenstaat.de/afd-datenbank/">FragDenStaat</a>.</p>
+        <p><strong>Bearbeitung:</strong> Maschinelle Aufbereitung (Gliederung, Seitenzuordnung, Fußnoten) durch Dennis Deutschkämer auf Grundlage der PDF-Fassung vom 6. Oktober 2026. Inoffiziell und ohne Gewähr – maßgeblich ist die PDF der GFF. Dies ist ein unabhängiger Prototyp, kein Angebot der GFF.</p>
+      </div>
+    </section>
+
+    <section class="block" id="datenschutz">
+      <h2>Datenschutz bei der Schnittstelle</h2>
+      <p class="breit">Verantwortlich ist Dennis Deutschkämer, Anschrift im <a href="https://plenarprotokolle.digital/impressum.php">Impressum von plenarprotokolle.digital</a>. Fragen zum Datenschutz bitte per E-Mail an <a href="mailto:dennis@deutschkaemer.info">dennis@deutschkaemer.info</a>.</p>
+      <div class="raster drei ds">
+        <div>
+          <h3>Was gespeichert wird</h3>
+          <p>Je Aufruf eines Werkzeugs: Zeitpunkt, Name des Werkzeugs, die übergebenen Suchangaben (auf 300 Zeichen gekürzt), Dauer und gegebenenfalls eine Fehlermeldung. Die Schnittstelle speichert keine IP-Adressen, keine Namen oder Kennungen der Nutzenden, setzt keine Cookies und erhält keine Inhalte der Unterhaltung. Es gibt kein Konto und keine Anmeldung.</p>
+          <p>Um die Zahl der Aufrufe je Client zu begrenzen, wird aus dem Adressbereich der Anfrage (die ersten drei Teile einer IPv4-Adresse, die ersten 48 Bit einer IPv6-Adresse) ein nicht umkehrbarer Abdruck gebildet und nur im Arbeitsspeicher vorgehalten.</p>
+        </div>
+        <div>
+          <h3>Wozu und wie lange</h3>
+          <p>Für den sicheren und stabilen Betrieb: Fehler finden, Überlastung verhindern und zählen, welche Werkzeuge genutzt werden. Rechtsgrundlage ist das berechtigte Interesse am sicheren Betrieb (Art. 6 Abs. 1 lit. f DSGVO). Es gibt keine Profile, keine Werbung und keine Weitergabe zu anderen Zwecken.</p>
+          <p>Die Aufrufprotokolle werden je Monat geführt und nach spätestens drei Monaten automatisch gelöscht. Der Abdruck für die Begrenzung verfällt nach spätestens zwei Stunden.</p>
+        </div>
+        <div>
+          <h3>Hosting und Weitergabe</h3>
+          <p>Die Schnittstelle läuft auf dem Webhosting der Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, als Auftragsverarbeiter nach Art. 28 DSGVO. Hetzner führt dabei nur die technischen Protokolle des Webservers, die für einen sicheren Betrieb nötig sind (<a href="https://www.hetzner.com/de/legal/privacy-policy/" rel="noopener">Datenschutzhinweise von Hetzner</a>). Für die Suche nach Bedeutung wird die Suchanfrage auf eigener Hardware in einen Vektor umgerechnet. Darüber hinaus gehen keine Daten an Dritte.</p>
+        </div>
+        <div>
+          <h3>Der Assistent</h3>
+          <p>Die Unterhaltung findet beim Anbieter des Assistenten statt (etwa Anthropic, OpenAI oder xAI), bei lokalen Programmen wie LM Studio auf dem eigenen Rechner. Er schickt der Schnittstelle je Aufruf nur die Angaben für das Werkzeug, nicht die Unterhaltung, und erhält die Antwort zurück. Für die Unterhaltung gelten die Bedingungen und Datenschutzhinweise des jeweiligen Anbieters.</p>
+        </div>
+        <div>
+          <h3>Rechte</h3>
+          <p>Betroffene haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Widerspruch (Art. 15 bis 21 DSGVO) sowie auf Beschwerde bei einer Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO). Weil die Schnittstelle keine Angaben zu Personen speichert, lässt sich ein einzelner Aufruf in der Regel niemandem zuordnen.</p>
+          <p class="note">Stand: 20. November 2026.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fuss">
+    <div class="rahmen">
+      <p>© 2026 Dennis Deutschkämer · <a href="https://deutschkaemer.info">deutschkaemer.info</a> · <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten">Quelltext auf GitHub</a></p>
+    </div>
+  </footer>
+  <script src="seite.js?v=3" defer></script>
+</body>
+</html>

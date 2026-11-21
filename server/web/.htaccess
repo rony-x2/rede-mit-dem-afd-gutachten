@@ -1,0 +1,7 @@
+# poc.deutschkaemer.info/afd-gutachten
+# /afd-gutachten/mcp ohne Endung und ohne Weiterleitung (MCP-Clients folgen keinem 301 bei POST)
+RewriteEngine On
+RewriteRule ^mcp/?$ mcp.php [L,QSA]
+
+# Kopfzeile Authorization nicht verwerfen (für spätere Erweiterungen)
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
