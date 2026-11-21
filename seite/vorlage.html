@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#0f1115">
   <link rel="stylesheet" href="/style.css?v=4">
-  <link rel="stylesheet" href="seite.css?v=11">
+  <link rel="stylesheet" href="seite.css?v=12">
 </head>
 <body>
   <header class="kopf">
@@ -277,6 +277,71 @@
           <li><b>Suche</b><span>Verfahren der Bedeutungssuche, Testsatz mit 46 Fragen und alle Messungen</span><code>docs/suche.md</code></li>
           <li><b>Diese Seite</b><span>Vorlage, Bauskript, Gestaltung und dieses Diagramm als SVG</span><code>seite/</code></li>
         </ul>
+      </div>
+    </section>
+
+    <section class="block" id="ausblick">
+      <h2>Ausblick: Chat direkt auf dieser Seite</h2>
+      <p class="breit">Bisher braucht man einen eigenen KI-Assistenten, um mit dem Gutachten zu sprechen. Eine Chat-Oberfläche hier auf der Seite würde es auch ohne Konto und ohne Einrichtung zugänglich machen. Die Schnittstelle selbst bliebe dafür unverändert; dazu käme ein Sprachmodell, das sie benutzt. Zwei Wege wären denkbar – umgesetzt ist keiner davon.</p>
+      <div class="raster zwei faelle">
+        <article class="fall">
+          <p class="fall-nr">Fall 1</p>
+          <h3>Über einen KI-Anbieter, etwa Claude</h3>
+          <ol class="kette" aria-label="Weg einer Frage">
+            <li><b>Browser</b><span>Chatfenster</span></li>
+            <li><b>Chat-Endpunkt</b><span>PHP auf dieser Seite</span></li>
+            <li><b>Claude API</b><span>Modell bei Anthropic</span></li>
+            <li><b>MCP-Schnittstelle</b><span>wie heute</span></li>
+          </ol>
+          <p>Ein kleiner Endpunkt auf dem Webserver nimmt die Frage entgegen und schickt sie an die Claude API, zusammen mit der Adresse dieser Schnittstelle. Die Werkzeugaufrufe erledigt der Anbieter selbst; die Antwort kommt Wort für Wort zurück ins Chatfenster.</p>
+          <h4>Was nötig wäre</h4>
+          <ul class="noetig">
+            <li>API-Konto bei Anthropic; der Schlüssel liegt nur auf dem Server, ein Ausgabenlimit deckelt die Kosten</li>
+            <li>Chat-Endpunkt, der die Messages API mit dem MCP-Connector aufruft und die Antwort als Stream (Server-Sent Events) weiterreicht</li>
+            <li>Vertrag zur Auftragsverarbeitung und Hinweis in der Datenschutzerklärung: Die Fragen gehen an Anthropic in die USA</li>
+          </ul>
+          <dl class="eckdaten">
+            <div><dt>Antworten</dt><dd>hohe Qualität, Zitierregeln werden in der Regel eingehalten</dd></div>
+            <div><dt>Kosten</dt><dd>je Frage geschätzt 0,3 Cent (Haiku 5.5) bis 6 Cent (Sonnet 5.5); 1.000 Fragen etwa 3 bis 60 US-Dollar</dd></div>
+            <div><dt>Last</dt><dd>trägt der Anbieter; die Grenze setzt das Budget</dd></div>
+            <div><dt>Aufwand</dt><dd>gering, etwa ein bis zwei Tage</dd></div>
+            <div><dt>Datenschutz</dt><dd>die Fragen verarbeitet der Anbieter in den USA</dd></div>
+          </dl>
+        </article>
+        <article class="fall">
+          <p class="fall-nr">Fall 2</p>
+          <h3>Eigene Hardware mit eigenen Modellen</h3>
+          <ol class="kette" aria-label="Weg einer Frage">
+            <li><b>Browser</b><span>Chatfenster</span></li>
+            <li><b>Chat-Endpunkt</b><span>PHP auf dieser Seite</span></li>
+            <li><b>Vermittler + Modell</b><span>eigener Rechner, lokale KI</span></li>
+            <li><b>MCP-Schnittstelle</b><span>wie heute</span></li>
+          </ol>
+          <p>Die Frage geht vom Webserver über eine gesicherte Verbindung zu einem eigenen Rechner mit Grafikkarte. Dort führt ein kleines Programm die Unterhaltung mit dem Modell und reicht dessen Werkzeugaufrufe an die Schnittstelle weiter – der Modellserver selbst ruft keine Werkzeuge auf.</p>
+          <h4>Was nötig wäre</h4>
+          <ul class="noetig">
+            <li>Grafikkarte mit mindestens 24&nbsp;GB Speicher (vorhanden: Tesla P40 und RTX 4090)</li>
+            <li>Modell mit Werkzeugaufrufen und mindestens 32.000 Token Kontext, etwa Gemma&nbsp;4 26B-A4B oder Qwen3, über llama-server</li>
+            <li>Vermittler für die Werkzeugaufrufe, Verbindung vom Webserver nach Hause (SSH-Tunnel oder WireGuard) und ein Rechner, der dauerhaft läuft</li>
+          </ul>
+          <dl class="eckdaten">
+            <div><dt>Antworten</dt><dd>brauchbar; kleinere Modelle halten Zitierregeln und lange Werkzeugantworten weniger sicher ein – vorher mit dem Testsatz prüfen</dd></div>
+            <div><dt>Kosten</dt><dd>keine Gebühren je Frage; Strom und vorhandene Hardware</dd></div>
+            <div><dt>Last</dt><dd>eine Karte bedient nur wenige Unterhaltungen gleichzeitig, weitere warten in einer Schlange</dd></div>
+            <div><dt>Aufwand</dt><dd>mittel, einige Tage, dazu Betrieb und Pflege des eigenen Rechners</dd></div>
+            <div><dt>Datenschutz</dt><dd>die Fragen verlassen den eigenen Betrieb nicht</dd></div>
+          </dl>
+        </article>
+      </div>
+      <div class="beide">
+        <h3>Was beide Wege brauchen</h3>
+        <ul class="raster vier">
+          <li><b>Chatfenster</b><span>Antwort im Stream, Belege als Links auf die Seite in der PDF, voll bedienbar auf dem Smartphone</span></li>
+          <li><b>Schutz vor Missbrauch</b><span>Anfragegrenzen je Netzbereich, Themenbindung an das Gutachten, Hinweis bei Überlast</span></li>
+          <li><b>Transparenz</b><span>klar sagen, welches Modell antwortet, was gespeichert wird und dass KI sich irren kann</span></li>
+          <li><b>Prüfung</b><span>Antworten mit dem Testsatz der Suche gegenprüfen, bevor die Oberfläche öffentlich wird</span></li>
+        </ul>
+        <p class="klein">Denkbar ist auch beides zusammen: eigene Hardware als Normalfall, der Anbieter als Ausweichweg bei hoher Last. Ausführlicher, mit Rechenweg der Kostenschätzung: <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten/blob/main/docs/ausblick.md">docs/ausblick.md</a>.</p>
       </div>
     </section>
 

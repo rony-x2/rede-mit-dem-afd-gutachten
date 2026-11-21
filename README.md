@@ -57,6 +57,7 @@ Die Schnittstelle gibt dem Modell Regeln für die Antwort mit: Es soll nur wiede
 - [docs/server.md](docs/server.md): Voraussetzungen, Verzeichnisse, Datenbank, Einbettungsdienst, Betrieb
 - [docs/werkzeuge.md](docs/werkzeuge.md): Protokoll, Werkzeuge, Anweisungen an das Modell, Einbindung in Clients
 - [docs/projektseite.md](docs/projektseite.md): Aufbau und Gestaltung der Projektseite, Zeichen
+- [docs/ausblick.md](docs/ausblick.md): mögliche Erweiterung um einen Chat direkt auf der Seite, über einen Anbieter oder eigene Hardware
 
 ## Selbst betreiben
 
