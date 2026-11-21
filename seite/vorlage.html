@@ -12,14 +12,16 @@
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#0f1115">
-  <link rel="stylesheet" href="/style.css?v=4">
-  <link rel="stylesheet" href="seite.css?v=15">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="/style.css?v=5">
+  <link rel="stylesheet" href="seite.css?v=16">
 </head>
 <body>
   <header class="kopf">
     <div class="rahmen">
       <a class="marke" href="/">poc<span>.deutschkaemer.info</span></a>
-      <nav aria-label="Hauptnavigation">
+      <button class="menue-knopf" type="button" aria-expanded="false" aria-controls="hauptnavigation">{{ikon:menue:ikon auf}}{{ikon:schliessen:ikon zu}}Menü</button>
+      <nav id="hauptnavigation" aria-label="Hauptnavigation">
         <a href="#einrichten">Einrichten</a>
         <a href="#werkzeuge">Werkzeuge</a>
         <a href="#aufbau">Aufbau</a>
@@ -403,6 +405,6 @@
       <p>© 2026 Dennis Deutschkämer · <a href="https://deutschkaemer.info">deutschkaemer.info</a> · <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten">Quelltext auf GitHub</a></p>
     </div>
   </footer>
-  <script src="seite.js?v=3" defer></script>
+  <script src="seite.js?v=4" defer></script>
 </body>
 </html>

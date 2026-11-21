@@ -49,3 +49,18 @@ for (const b of document.querySelectorAll('[data-kopie]')) {
     } else start();
   }
 })();
+
+// Menü auf dem Smartphone
+(() => {
+  const kopf = document.querySelector('.kopf'), knopf = kopf?.querySelector('.menue-knopf');
+  if (!knopf) return;
+  const setze = (auf) => { kopf.classList.toggle('offen', auf); knopf.setAttribute('aria-expanded', String(auf)); };
+  knopf.addEventListener('click', () => {
+    const auf = !kopf.classList.contains('offen');
+    setze(auf);
+    if (auf) kopf.querySelector('nav a')?.focus({ preventScroll: true });
+  });
+  kopf.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => setze(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && kopf.classList.contains('offen')) { setze(false); knopf.focus(); } });
+  document.addEventListener('click', (e) => { if (!kopf.contains(e.target)) setze(false); });
+})();
