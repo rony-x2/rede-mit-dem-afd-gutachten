@@ -42,21 +42,21 @@ STIL_KLASSEN = '''
 .d-p{fill:none;stroke:%(leise)s;stroke-width:1.4;stroke-linejoin:round}
 .d-p.b{stroke:%(akzent)s;stroke-width:1.6}
 .d-s{fill:%(leise)s}.d-s.b{fill:%(akzent)s}
-.d-l{fill:%(leise)s;font-size:11.5px}.d-l.b{fill:%(akzent)s}
+.d-l{fill:%(leise)s;font-size:11.5px}.d-l.b{fill:%(akzenttext)s}
 .d-chip{fill:%(flaeche)s;stroke:%(akzent)s;stroke-width:1.1}
-.d-chiptext{fill:%(akzent)s;font-size:10.5px;font-weight:600;letter-spacing:.02em}
-.d-hinweis{fill:%(akzent)s;font-size:11.5px;font-weight:600}
+.d-chiptext{fill:%(akzenttext)s;font-size:10.5px;font-weight:600;letter-spacing:.02em}
+.d-hinweis{fill:%(akzenttext)s;font-size:11.5px;font-weight:600}
 '''
 SCHRIFT = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif'
 MONO = 'ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,monospace'
 THEMEN = {
     'seite': dict(bahn='color-mix(in oklab,var(--flaeche) 40%,transparent)', linie='var(--linie)', leise='var(--text-2)',
-                  flaeche='var(--flaeche)', text='var(--text)', projekt='var(--projekt)', akzent='var(--akzent)',
+                  flaeche='var(--flaeche)', text='var(--text)', projekt='var(--projekt)', akzent='var(--akzent)', akzenttext='var(--akzent-text, var(--akzent))',
                   mono='var(--mono)'),
     'hell':  dict(bahn='#f6f8fa', linie='#d1d9e0', leise='#59636e', flaeche='#ffffff', text='#1f2328',
-                  projekt='#b5523b', akzent='#2f8a7b', mono=MONO),
+                  projekt='#b5523b', akzent='#2f8a7b', akzenttext='#23756a', mono=MONO),
     'dunkel': dict(bahn='#151b23', linie='#3d444d', leise='#9198a1', flaeche='#0d1117', text='#e6edf3',
-                   projekt='#da6e55', akzent='#5eb8a8', mono=MONO),
+                   projekt='#da6e55', akzent='#5eb8a8', akzenttext='#5eb8a8', mono=MONO),
 }
 
 H = 70  # Höhe eines Kastens

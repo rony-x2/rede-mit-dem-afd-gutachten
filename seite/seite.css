@@ -61,7 +61,7 @@ h1.mit-zeichen { display: flex; align-items: center; gap: .32em; }
 .avatar { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--linie); background: var(--bg); color: var(--akzent); }
 .avatar .ikon { width: 19px; height: 19px; }
 .blase.antwort { background: var(--bg); border: 1px solid var(--linie); border-top-left-radius: 4px; font-size: clamp(.95rem, 1.2vw, 1.03rem); }
-.beleg { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 4px 11px; border: 1px solid color-mix(in oklab, var(--akzent) 45%, transparent); border-radius: 999px; font-family: var(--mono); font-size: .76rem; color: var(--akzent); text-decoration: none; }
+.beleg { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 4px 11px; border: 1px solid color-mix(in oklab, var(--akzent) 45%, transparent); border-radius: 999px; font-family: var(--mono); font-size: .76rem; color: var(--akzent-text); text-decoration: none; }
 .beleg .ikon { width: 14px; height: 14px; }
 .beleg:hover { background: color-mix(in oklab, var(--akzent) 12%, transparent); }
 .g.laeuft .werkzeug-zeile, .g.laeuft .antwort-zeile, .g.laeuft .beleg { opacity: 0; }
@@ -208,7 +208,7 @@ pre.code { margin: 0; padding: 12px 14px; overflow-x: auto; border: 1px solid va
 
 /* Ausblick: zwei Wege zu einem eigenen Chat */
 .fall { display: flex; flex-direction: column; padding: clamp(20px, 2.6vw, 32px); border: 1px solid var(--linie); border-radius: 16px; background: var(--flaeche); }
-.fall-nr { margin: 0 0 4px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--akzent) !important; }
+.fall-nr { margin: 0 0 4px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--akzent-text) !important; }
 .fall h3 { margin: 0 0 18px; font-size: clamp(1.15rem, 1.6vw, 1.35rem); }
 .fall h4 { margin: 18px 0 8px; font-size: .95rem; color: var(--text); }
 .kette { list-style: none; margin: 0 0 16px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
@@ -265,3 +265,15 @@ pre.code { margin: 0; padding: 12px 14px; overflow-x: auto; border: 1px solid va
   .balken li { grid-template-columns: 1fr; gap: 6px; padding-bottom: 10px; border-bottom: 1px solid var(--linie); }
   .balken li:last-child { border-bottom: 0; }
 }
+
+/* Akzentfarbe als Schrift: im hellen Bild etwas dunkler, damit kleiner Text mindestens 4,5:1 erreicht (WCAG AA) */
+:root { --akzent-text: var(--akzent); }
+@media (prefers-color-scheme: light) { :root { --akzent-text: #23756a; } }
+@supports (color: oklch(0% 0 0)) {
+  @media (color-gamut: p3) and (prefers-color-scheme: light) { :root { --akzent-text: oklch(51% 0.105 180); } }
+}
+main a:not([class]), .fuss a, .kicker { color: var(--akzent-text); }
+
+/* Sehr schmale Smartphones (320 px): Titel kleiner, Spalte darf schrumpfen */
+@media (max-width: 960px) { .buehne { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 360px) { .buehne h1 { font-size: 7.6vw; } .kennzahlen li { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; } }
