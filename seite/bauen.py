@@ -74,6 +74,24 @@ GESPRAECHE = [
                  'Sozialwissenschaftler*innen prüften die Treffer. Für die rechtliche Einordnung entwarf KI nur vereinzelt '
                  'Vorschläge, die ausnahmslos überarbeitet wurden.',
          beleg=('Einführung D, S. 149 und 167', f'{PDF}#page=169')),
+    dict(frage='Was ist die Rechtsgrundlage?', werkzeug='rechtsgrundlage',
+         antwort='Geprüft wird nach Art. 21 Abs. 2 GG: Verfassungswidrig sind Parteien, die „nach ihren Zielen oder nach '
+                 'dem Verhalten ihrer Anhänger darauf ausgehen, die freiheitliche demokratische Grundordnung zu '
+                 'beeinträchtigen oder zu beseitigen“. Darüber entscheidet das Bundesverfassungsgericht; wie die GFF die '
+                 'Merkmale auslegt, steht in Teil 2 des Gutachtens.',
+         beleg=('Art. 21 Abs. 2 GG', 'https://www.gesetze-im-internet.de/gg/art_21.html')),
+    dict(frage='Bedroht die AfD andere Politiker?', werkzeug='bedeutung_suchen',
+         antwort='Laut Gutachten fordern AfD-Funktionär*innen, politische Gegner*innen für demokratisch legitimierte '
+                 'Entscheidungen strafrechtlich zu verfolgen; dokumentiert sind mehr als 220 solcher Äußerungen. Zudem '
+                 'versuchten Anhänger*innen in erheblichem Ausmaß, Gegner*innen einzuschüchtern. Die GFF sieht darin '
+                 'eine große Gefahr für den demokratischen Wettbewerb.',
+         beleg=('Teil 3 D.V, S. 1494–1495', f'{PDF}#page=1496')),
+    dict(frage='Wie steht die AfD zum Staat?', werkzeug='bedeutung_suchen',
+         antwort='Das Gutachten beschreibt eine systematische Delegitimierung demokratischer Institutionen: Etablierte '
+                 'Parteien würden als illegitime Vertretung dargestellt, Mehrheitsentscheidungen als Werk einer korrupten '
+                 'Elite. Rechtsstaatsfeindliche Ziele sieht die GFF derzeit dagegen nicht nachgewiesen, ebenso wenig einen '
+                 'Nationalstaat nach dem Prinzip der „Volksgemeinschaft“ wie bei der NPD.',
+         beleg=('S. 1542, S. 1443 und S. 116', f'{PDF}#page=1544')),
 ]
 
 BEISPIELE = [
