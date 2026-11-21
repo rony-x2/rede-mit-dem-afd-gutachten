@@ -54,7 +54,7 @@ Dazu kommen rund 1.000 Token Ausgabe. Die Listenpreise je Million Token stehen i
 
 Mit Prompt-Caching für Anweisungen und Werkzeugliste sinken die Eingabekosten weiter. Lange Abschnitte erhöhen sie. Quelle der Preise: [Claude-Preisliste](https://platform.claude.com/docs/en/about-claude/pricing).
 
-## Fall 2: eigene Hardware mit eigenen Modellen
+## Fall 2: lokale Hardware mit frei verfügbaren Modellen
 
 ```
 Browser ──► Chat-Endpunkt (PHP) ══ SSH-Tunnel / WireGuard ══► Vermittler ◄──► llama-server (Grafikkarte)
@@ -130,4 +130,4 @@ Die Fundstelle wird automatisch geprüft: Liegt eine zitierte Seite in einem der
 - [ ] **Prüfung vor dem Start:** Die Antworten mit festen Testfragen gegenprüfen: richtige Fundstelle, Seitenangabe, Belege und Bewertung sauber getrennt.
 - [ ] **Betreuung im Betrieb:** Jemand behält Kosten, Auslastung und Fehlermeldungen im Blick und reagiert auf Hinweise.
 
-Beide Wege lassen sich verbinden: eigene Hardware als Normalfall, der Anbieter als Ausweichweg bei hoher Last oder wenn der eigene Rechner nicht erreichbar ist.
+Beide Wege lassen sich verbinden: lokale Hardware als Normalfall, der Anbieter als Ausweichweg bei hoher Last oder wenn der eigene Rechner nicht erreichbar ist.
