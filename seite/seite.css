@@ -224,12 +224,16 @@ pre.code { margin: 0; padding: 12px 14px; overflow-x: auto; border: 1px solid va
 .eckdaten dd { margin: 2px 0 0; font-size: .88rem; color: var(--text-2); line-height: 1.45; }
 .beide { margin-top: clamp(20px, 2.5vw, 32px); }
 .beide h3 { margin: 0 0 12px; font-size: 1.1rem; }
-.beide ul { list-style: none; margin: 0; padding: 0; }
-.beide li { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 1px solid var(--linie); border-radius: var(--radius); background: var(--flaeche); font-size: .9rem; }
-.beide li b { color: var(--text); }
+.checkliste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 64px); }
+.checkliste li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--linie); }
+.checkliste .ikon { width: 24px; height: 24px; margin-top: 1px; color: var(--akzent); }
+.checkliste div { display: flex; flex-direction: column; gap: 3px; }
+.checkliste b { color: var(--text); font-size: 1rem; }
+.checkliste span { font-size: .92rem; color: var(--text-2); line-height: 1.5; }
 .beide .klein { margin-top: 14px; max-width: 90ch; }
 @media (max-width: 1300px) and (min-width: 961px) { .kette { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kette li:nth-child(2)::after { display: none; } }
 @media (max-width: 640px) {
+  .checkliste { grid-template-columns: 1fr; }
   .kette { grid-template-columns: 1fr; gap: 14px; }
   .kette li:not(:last-child)::after { top: auto; bottom: -13px; right: auto; left: 22px; margin: 0; width: 12px; height: 12px; clip-path: polygon(15% 0, 85% 0, 50% 100%); }
   .eckdaten { grid-template-columns: 1fr; }

@@ -70,10 +70,10 @@ Der Modellserver (llama-server, LM Studio) liefert Werkzeugaufrufe nur als Vorsc
 
 **Was nötig wäre**
 
-- Eine Grafikkarte mit mindestens 24 GB Speicher. Vorhanden sind eine Tesla P40 und eine RTX 4090.
+- Ein Rechner mit leistungsfähiger Grafikkarte, mindestens 24 GB Grafikspeicher.
 - Ein Modell mit Werkzeugaufrufen und mindestens 32.000 Token Kontext, weil die Antworten der Schnittstelle lang sein können. In Frage kommen etwa Gemma 4 26B-A4B (Q4_K_M, 17 GB) oder ein Qwen3-Modell.
 - Der Vermittler, als kleines Python- oder PHP-Programm.
-- Eine Verbindung vom Webserver zum eigenen Rechner, etwa über einen SSH-Tunnel wie heute für die Einbettung oder über WireGuard. Der Rechner muss dauerhaft laufen.
+- Eine gesicherte Verbindung vom Webserver zu diesem Rechner, etwa über einen SSH-Tunnel oder WireGuard. Der Rechner muss dauerhaft laufen.
 - Eine Warteschlange: Eine Karte bedient nur wenige Unterhaltungen gleichzeitig (Slots in llama-server).
 
 **Abwägung**
@@ -82,11 +82,13 @@ Der Modellserver (llama-server, LM Studio) liefert Werkzeugaufrufe nur als Vorsc
 - Kleinere Modelle halten die Zitierregeln weniger sicher ein und verlieren bei langen Werkzeugantworten eher den Faden. Vor einer Freigabe sollten die Antworten mit dem [Testsatz](../messung/testsatz.json) geprüft werden, auf Fundstelle, Seitenangabe und Trennung von Beleg und Bewertung.
 - Strom, Wartung und Ausfälle des eigenen Rechners sind zu bedenken.
 
-## Was beide Wege brauchen
+## Checkliste: was beide Wege brauchen
 
-- **Chatfenster:** Antwort im Stream, Belege als Links auf die Seite in der PDF, voll bedienbar auf dem Smartphone.
-- **Schutz vor Missbrauch:** Anfragegrenzen je Netzbereich wie bei der Schnittstelle, Bindung an das Thema Gutachten, Hinweis bei Überlast.
-- **Transparenz:** sagen, welches Modell antwortet, was gespeichert wird und dass KI sich irren kann.
-- **Prüfung:** Antworten mit dem Testsatz gegenprüfen, bevor die Oberfläche öffentlich wird.
+- [ ] **Ein Chatfenster:** Antworten erscheinen Wort für Wort, Belege führen direkt auf die Seite in der PDF, alles auch auf dem Smartphone bedienbar.
+- [ ] **Schutz vor Missbrauch:** Begrenzte Zahl an Anfragen je Anschluss, Bindung an das Thema Gutachten und ein Hinweis, wenn gerade zu viel los ist.
+- [ ] **Transparenz:** Offen sagen, welches Modell antwortet, was gespeichert wird und dass KI sich irren kann.
+- [ ] **Rechtlicher Rahmen:** Impressum und Datenschutzerklärung passend zum gewählten Weg, beim Anbieter zusätzlich ein Vertrag zur Auftragsverarbeitung.
+- [ ] **Prüfung vor dem Start:** Die Antworten mit festen Testfragen gegenprüfen: richtige Fundstelle, Seitenangabe, Belege und Bewertung sauber getrennt.
+- [ ] **Betreuung im Betrieb:** Jemand behält Kosten, Auslastung und Fehlermeldungen im Blick und reagiert auf Hinweise.
 
 Beide Wege lassen sich verbinden: eigene Hardware als Normalfall, der Anbieter als Ausweichweg bei hoher Last oder wenn der eigene Rechner nicht erreichbar ist.

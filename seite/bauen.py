@@ -22,6 +22,7 @@ IKONEN = {
     'code': '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4.5l-3 15"/>',
     'werkzeug': '<path d="M14.7 6.3a4 4 0 0 0 5 5l-8.9 8.9a2.1 2.1 0 0 1-3-3z"/><path d="M14.7 6.3l2.8-2.8a4 4 0 0 1 3 3l-2.8 2.8"/>',
     'start': '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    'haken': '<circle cx="12" cy="12" r="9"/><path d="M8 12.4l2.8 2.8L16.2 9.6"/>',
     # Projektzeichen „Rede mit dem AfD-Gutachten“: Sprechblase mit Waage (Logo-Familie, siehe seite/logo)
     'projekt': '<path d="M7.5 3.5h9a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-5.5l-4.5 3.5v-3.5a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4z"/><path d="M12 6.3v7.4M9.6 13.7h4.8M7.6 8h8.8M7.6 8L6.2 11.2M7.6 8L9 11.2M6.2 11.2a1.4 1.4 0 0 0 2.8 0M16.4 8L15 11.2M16.4 8L17.8 11.2M15 11.2a1.4 1.4 0 0 0 2.8 0"/>',
 }

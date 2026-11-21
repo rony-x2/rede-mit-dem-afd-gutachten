@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#0f1115">
   <link rel="stylesheet" href="/style.css?v=4">
-  <link rel="stylesheet" href="seite.css?v=12">
+  <link rel="stylesheet" href="seite.css?v=13">
 </head>
 <body>
   <header class="kopf">
@@ -320,13 +320,13 @@
           <p>Die Frage geht vom Webserver über eine gesicherte Verbindung zu einem eigenen Rechner mit Grafikkarte. Dort führt ein kleines Programm die Unterhaltung mit dem Modell und reicht dessen Werkzeugaufrufe an die Schnittstelle weiter – der Modellserver selbst ruft keine Werkzeuge auf.</p>
           <h4>Was nötig wäre</h4>
           <ul class="noetig">
-            <li>Grafikkarte mit mindestens 24&nbsp;GB Speicher (vorhanden: Tesla P40 und RTX 4090)</li>
+            <li>ein Rechner mit leistungsfähiger Grafikkarte (mindestens 24&nbsp;GB Grafikspeicher)</li>
             <li>Modell mit Werkzeugaufrufen und mindestens 32.000 Token Kontext, etwa Gemma&nbsp;4 26B-A4B oder Qwen3, über llama-server</li>
-            <li>Vermittler für die Werkzeugaufrufe, Verbindung vom Webserver nach Hause (SSH-Tunnel oder WireGuard) und ein Rechner, der dauerhaft läuft</li>
+            <li>ein Vermittler für die Werkzeugaufrufe und eine gesicherte Verbindung vom Webserver zu diesem Rechner, der dauerhaft laufen muss</li>
           </ul>
           <dl class="eckdaten">
             <div><dt>Antworten</dt><dd>brauchbar; kleinere Modelle halten Zitierregeln und lange Werkzeugantworten weniger sicher ein – vorher mit dem Testsatz prüfen</dd></div>
-            <div><dt>Kosten</dt><dd>keine Gebühren je Frage; Strom und vorhandene Hardware</dd></div>
+            <div><dt>Kosten</dt><dd>keine Gebühren je Frage; dafür Anschaffung der Hardware und Strom</dd></div>
             <div><dt>Last</dt><dd>eine Karte bedient nur wenige Unterhaltungen gleichzeitig, weitere warten in einer Schlange</dd></div>
             <div><dt>Aufwand</dt><dd>mittel, einige Tage, dazu Betrieb und Pflege des eigenen Rechners</dd></div>
             <div><dt>Datenschutz</dt><dd>die Fragen verlassen den eigenen Betrieb nicht</dd></div>
@@ -334,12 +334,14 @@
         </article>
       </div>
       <div class="beide">
-        <h3>Was beide Wege brauchen</h3>
-        <ul class="raster vier">
-          <li><b>Chatfenster</b><span>Antwort im Stream, Belege als Links auf die Seite in der PDF, voll bedienbar auf dem Smartphone</span></li>
-          <li><b>Schutz vor Missbrauch</b><span>Anfragegrenzen je Netzbereich, Themenbindung an das Gutachten, Hinweis bei Überlast</span></li>
-          <li><b>Transparenz</b><span>klar sagen, welches Modell antwortet, was gespeichert wird und dass KI sich irren kann</span></li>
-          <li><b>Prüfung</b><span>Antworten mit dem Testsatz der Suche gegenprüfen, bevor die Oberfläche öffentlich wird</span></li>
+        <h3>Checkliste: was beide Wege brauchen</h3>
+        <ul class="checkliste">
+          <li>{{ikon:haken}}<div><b>Ein Chatfenster</b><span>Antworten erscheinen Wort für Wort, Belege führen direkt auf die Seite in der PDF, alles auch auf dem Smartphone bedienbar.</span></div></li>
+          <li>{{ikon:haken}}<div><b>Schutz vor Missbrauch</b><span>Begrenzte Zahl an Anfragen je Anschluss, Bindung an das Thema Gutachten und ein Hinweis, wenn gerade zu viel los ist.</span></div></li>
+          <li>{{ikon:haken}}<div><b>Transparenz</b><span>Offen sagen, welches Modell antwortet, was gespeichert wird und dass KI sich irren kann.</span></div></li>
+          <li>{{ikon:haken}}<div><b>Rechtlicher Rahmen</b><span>Impressum und Datenschutzerklärung passend zum gewählten Weg, beim Anbieter zusätzlich ein Vertrag zur Auftragsverarbeitung.</span></div></li>
+          <li>{{ikon:haken}}<div><b>Prüfung vor dem Start</b><span>Die Antworten mit festen Testfragen gegenprüfen: richtige Fundstelle, Seitenangabe, Belege und Bewertung sauber getrennt.</span></div></li>
+          <li>{{ikon:haken}}<div><b>Betreuung im Betrieb</b><span>Jemand behält Kosten, Auslastung und Fehlermeldungen im Blick und reagiert auf Hinweise.</span></div></li>
         </ul>
         <p class="klein">Denkbar ist auch beides zusammen: eigene Hardware als Normalfall, der Anbieter als Ausweichweg bei hoher Last. Ausführlicher, mit Rechenweg der Kostenschätzung: <a href="https://github.com/rony-x2/rede-mit-dem-afd-gutachten/blob/main/docs/ausblick.md">docs/ausblick.md</a>.</p>
       </div>
