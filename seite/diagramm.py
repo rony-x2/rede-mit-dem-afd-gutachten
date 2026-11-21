@@ -248,6 +248,62 @@ def suche_seite():
     return suche('seite', 'dsq') + suche_hoch('seite')
 
 
+# ------------------------------------------------------------------ Probelauf Chat mit eigener Hardware
+# 10 Testfragen als Chat mit Werkzeugaufrufen (messung/chat_probe.py), Modell vollständig im Grafikspeicher,
+# 32.000 Token Kontext, ohne Denkmodus; Median der Zeit bis zur fertigen Antwort. Gemessen am 21.11.2026.
+PROBELAUF = [
+    # Karte, Preis, Modell, Sekunden (Median), Antwortbeginn, Fragen/Min., richtige Fundstelle, PDF-Links
+    ('Tesla P40', 'gebraucht rund 260 €', 'Gemma 4 26B-A4B', 14.6, 5.7, 4, '8/10', '1/10'),
+    ('Tesla P40', 'gebraucht rund 260 €', 'Qwen3.8-27B', 108.2, 65.3, 0.5, '8/10', '9/10'),
+    ('RTX 4090', 'gebraucht rund 2.100 €', 'Gemma 4 26B-A4B', 4.3, 1.6, 14, '8/10', '0/10'),
+    ('RTX 4090', 'gebraucht rund 2.100 €', 'Qwen3.8-27B', 18.5, 6.3, 3, '9/10', '10/10'),
+]
+
+
+def zahl(x):
+    t = f'{x:.1f}'.rstrip('0').rstrip('.') if x < 100 else f'{x:.0f}'
+    return t.replace('.', ',')
+
+
+def probelauf(thema):
+    """Balkendiagramm des Probelaufs als SVG (docs/ausblick.md)."""
+    z = Zeichnung('pl')
+    x0, breite, zeile = 330, 430, 62
+    z.teile.append(f'<text class="d-bahntitel" x="16" y="22">Sekunden bis zur fertigen Antwort (Median, 10 Testfragen)</text>')
+    for n, (karte, preis, modell, sek, beginn, fpm, fund, links) in enumerate(PROBELAUF):
+        y = 44 + n * zeile
+        w = max(4, breite * sek / 110)
+        wb = breite * beginn / 110
+        z.teile.append(f'<text class="d-t" x="16" y="{y + 18}">{escape(karte)} · {escape(modell)}</text>'
+                       f'<text class="d-d" x="16" y="{y + 36}">{escape(preis)}</text>'
+                       f'<rect class="d-kasten" x="{x0}" y="{y + 6}" width="{breite}" height="26" rx="6"/>'
+                       f'<rect class="d-balken" x="{x0}" y="{y + 6}" width="{w:.1f}" height="26" rx="6"/>'
+                       f'<rect class="d-balken2" x="{x0}" y="{y + 6}" width="{wb:.1f}" height="26" rx="6"/>'
+                       f'<text class="d-t" x="{x0 + breite + 16}" y="{y + 18}">{zahl(sek)} s</text>'
+                       f'<text class="d-d" x="{x0 + breite + 16}" y="{y + 36}">≈ {zahl(fpm)} Fragen/Min.</text>')
+    y = 44 + len(PROBELAUF) * zeile + 4
+    z.teile.append(f'<rect class="d-balken2" x="16" y="{y}" width="14" height="10" rx="3"/>'
+                   f'<text class="d-d" x="36" y="{y + 9}">bis die Antwort beginnt</text>'
+                   f'<rect class="d-balken" x="196" y="{y}" width="14" height="10" rx="3"/>'
+                   f'<text class="d-d" x="216" y="{y + 9}">bis sie fertig ist</text>')
+    svg = z.svg(900, y + 24, thema)
+    farben = THEMEN[thema]
+    return svg.replace('</style>', '.d-balken{fill:%s;opacity:.45}.d-balken2{fill:%s}</style>' % (farben['akzent'], farben['akzent']))
+
+
+def probelauf_html():
+    """Dieselben Werte als HTML-Balken für die Projektseite (passt sich jeder Breite an)."""
+    zeilen = []
+    for karte, preis, modell, sek, beginn, fpm, fund, links in PROBELAUF:
+        zeilen.append(
+            f'          <li><div class="b-kopf"><b>{escape(karte)}</b> <span>{escape(preis)}</span><em>{escape(modell)}</em></div>'
+            f'<div class="b-spur" role="img" aria-label="{zahl(sek)} Sekunden je Antwort, Antwort beginnt nach {zahl(beginn)} Sekunden">'
+            f'<span class="b-voll" style="--w:{min(100, sek / 110 * 100):.1f}%"></span><span class="b-beginn" style="--w:{beginn / 110 * 100:.1f}%"></span></div>'
+            f'<div class="b-zahl"><p><b>{zahl(sek)} s</b> je Antwort</p><span>≈ {zahl(fpm)} Fragen pro Minute</span>'
+            f'<span>Fundstelle {fund} · <span class="nw">PDF-Link {links}</span></span></div></li>')
+    return '\n'.join(zeilen)
+
+
 def diagramm_seite():
     """Beide Fassungen für die Projektseite; CSS zeigt je nach Breite eine davon."""
     return quer('seite') + hoch('seite')
@@ -259,4 +315,5 @@ if __name__ == '__main__':
     for thema in ('hell', 'dunkel'):
         (ziel / f'ablauf-{thema}.svg').write_text(quer(thema) + '\n', encoding='utf-8')
         (ziel / f'suche-{thema}.svg').write_text(suche(thema) + '\n', encoding='utf-8')
+        (ziel / f'probelauf-{thema}.svg').write_text(probelauf(thema) + '\n', encoding='utf-8')
     print('geschrieben:', ziel)

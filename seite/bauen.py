@@ -2,7 +2,7 @@
 """Baut index.html der Projektseite aus vorlage.html: Logos inline, Piktogramme, Unterhaltung."""
 import html, re, sys
 
-from diagramm import diagramm_seite, suche_seite
+from diagramm import diagramm_seite, suche_seite, probelauf_html
 from pathlib import Path
 
 HIER = Path(__file__).parent
@@ -129,6 +129,7 @@ text = text.replace('{{BEISPIELE}}', '\n'.join(
 text = text.replace('{{ADRESSE}}', ADRESSE)
 text = text.replace('{{DIAGRAMM}}', diagramm_seite())
 text = text.replace('{{SUCHE}}', suche_seite())
+text = text.replace('{{PROBELAUF}}', probelauf_html())
 text = re.sub(r'\{\{logo:([^:}]+)(?::([^}]+))?\}\}', lambda m: logo(m[1], m[2] or 'logo'), text)
 text = re.sub(r'\{\{ikon:([^:}]+)(?::([^}]+))?\}\}', lambda m: ikon(m[1], m[2] or 'ikon'), text)
 assert '{{' not in text, re.findall(r'\{\{[^}]*\}\}', text)

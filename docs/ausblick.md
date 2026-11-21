@@ -70,17 +70,56 @@ Der Modellserver (llama-server, LM Studio) liefert Werkzeugaufrufe nur als Vorsc
 
 **Was nötig wäre**
 
-- Ein Rechner mit leistungsfähiger Grafikkarte, mindestens 24 GB Grafikspeicher.
+- Ein Rechner mit leistungsfähiger Grafikkarte, mindestens 24 GB Grafikspeicher. Geeignete Karten gibt es gebraucht ab rund 260 € (siehe [Probelauf](#probelauf)).
 - Ein Modell mit Werkzeugaufrufen und mindestens 32.000 Token Kontext, weil die Antworten der Schnittstelle lang sein können. In Frage kommen etwa Gemma 4 26B-A4B (Q4_K_M, 17 GB) oder ein Qwen3-Modell.
 - Der Vermittler, als kleines Python- oder PHP-Programm.
 - Eine gesicherte Verbindung vom Webserver zu diesem Rechner, etwa über einen SSH-Tunnel oder WireGuard. Der Rechner muss dauerhaft laufen.
-- Eine Warteschlange: Eine Karte bedient nur wenige Unterhaltungen gleichzeitig (Slots in llama-server).
+- Eine Warteschlange: Mit 24 GB läuft eine Unterhaltung zur Zeit. Je nach Karte und Modell schafft sie etwa 3 bis 14 Fragen pro Minute (siehe [Probelauf](#probelauf)).
 
 **Abwägung**
 
 - Die Fragen verlassen den eigenen Betrieb nicht, und es fallen keine Gebühren je Frage an.
 - Kleinere Modelle halten die Zitierregeln weniger sicher ein und verlieren bei langen Werkzeugantworten eher den Faden. Vor einer Freigabe sollten die Antworten mit dem [Testsatz](../messung/testsatz.json) geprüft werden, auf Fundstelle, Seitenangabe und Trennung von Beleg und Bewertung.
 - Strom, Wartung und Ausfälle des eigenen Rechners sind zu bedenken.
+
+## Probelauf
+
+Für Fall 2 gab es am 21. November 2026 einen Probelauf mit [`messung/chat_probe.py`](../messung/chat_probe.py). Das Skript ist zugleich ein einfacher Vermittler. Getestet wurden zwei Grafikkarten mit je 24 GB und zwei frei verfügbare Modelle mit denselben 10 Fragen aus dem Testsatz. Jede Frage lief als echter Chat: Das Modell rief die Werkzeuge der Schnittstelle selbst auf und antwortete mit Seitenangaben.
+
+Die Bedingungen waren für alle vier Läufe gleich:
+- Modell vollständig im Grafikspeicher, gestartet mit `-ngl 99 -fit off`,
+- 32.000 Token Kontext,
+- eine Unterhaltung zur Zeit,
+- Denkmodus aus.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="bilder/probelauf-dunkel.svg">
+  <img alt="Balkendiagramm: Sekunden bis zur fertigen Antwort. Tesla P40 mit Gemma 4: 14,6 s; Tesla P40 mit Qwen3.8: 108 s; RTX 4090 mit Gemma 4: 4,3 s; RTX 4090 mit Qwen3.8: 18,5 s." src="bilder/probelauf-hell.svg" width="100%">
+</picture>
+
+| Karte (gebraucht) | Modell | je Antwort (Median) | Antwort beginnt | Fragen/Min. | Werkzeugaufrufe | richtige Fundstelle | Link auf PDF |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Tesla P40, rund 260 € | Gemma 4 26B-A4B | 14,6 s | 5,7 s | ≈ 4 | 1,2 | 8/10 | 1/10 |
+| Tesla P40, rund 260 € | Qwen3.8-27B | 108 s | 65 s | ≈ 0,5 | 5,1 | 8/10 | 9/10 |
+| RTX 4090, rund 2.100 € | Gemma 4 26B-A4B | 4,3 s | 1,6 s | ≈ 14 | 1,3 | 8/10 | 0/10 |
+| RTX 4090, rund 2.100 € | Qwen3.8-27B | 18,5 s | 6,3 s | ≈ 3 | 3,5 | 9/10 | 10/10 |
+
+**Schnelligkeit:**
+
+| | P40 · Gemma 4 | P40 · Qwen3.8 | 4090 · Gemma 4 | 4090 · Qwen3.8 |
+|---|---:|---:|---:|---:|
+| Text einlesen | 683 Token/s | 199 Token/s | 5.190 Token/s | 2.761 Token/s |
+| Antwort schreiben | 52 Token/s | 13 Token/s | 160 Token/s | 47 Token/s |
+| belegter Grafikspeicher | 17,3 GB | 16,8 GB | ca. 17,5 GB | ca. 17 GB |
+
+**Was auffällt:**
+- **Gemma 4 26B-A4B** ist ein Mixture-of-Experts-Modell: Je Wort rechnet nur ein kleiner Teil seiner Parameter. Es ist deshalb schon auf der günstigen Tesla P40 flott. Es sucht meist nur einmal und antwortet dann direkt aus den Fundstellen, knapp und sauber gegliedert, setzt aber kaum Links auf die PDF-Seite. Mit einer klareren Anweisung ließe sich das vermutlich beheben. Einmal verwies es auf eine falsche Gliederungsnummer.
+- **Qwen3.8-27B** rechnet je Wort alle Parameter. Es recherchiert gründlicher, liest Abschnitte nach, zitiert mehr im Wortlaut und verlinkt fast immer. Auf der P40 ohne Tensor-Kerne ist es dafür sehr langsam. Dort brach es eine Frage nach 16 Werkzeugaufrufen ab, weil es im falschen Teil suchte. Auf der RTX 4090 beantwortete es alle 10 Fragen in unter 25 Sekunden.
+- **Speicher:** Mit 24 GB passt neben dem Modell genau eine Unterhaltung mit 32.000 Token. Mehr Fragen pro Minute bedeuten also kürzere Wartezeiten in der Schlange, nicht mehr gleichzeitige Unterhaltungen.
+
+Die Fundstelle wird automatisch geprüft: Liegt eine zitierte Seite in einem der erwarteten Abschnitte des Testsatzes? Diese Prüfung ist streng. Eine Antwort ohne Seitenzahl gilt dabei als falsch, auch wenn sie inhaltlich stimmt.
+
+Die Preise sind ungefähre Gebrauchtpreise vom November 2026: Für die Tesla P40 sind es rund 260 €. Für die RTX 4090 ist es der Gebrauchtmarktpreis laut [tech-insider.org](https://tech-insider.org/de/?p=841).
 
 ## Checkliste: was beide Wege brauchen
 
