@@ -6,7 +6,16 @@ Die Seite <https://poc.deutschkaemer.info/afd-gutachten/> ist statisches HTML. `
 cd seite && python3 bauen.py          # schreibt seite/index.html
 ```
 
-Hochgeladen werden `index.html`, `seite.css` und `seite.js`, zusammen mit dem Inhalt von `server/web/`.
+`seite/index.html` ist die gebaute Seite, wie sie live läuft, und liegt mit im Repository. Hochgeladen werden `index.html`, `seite.css` und `seite.js` nach `/afd-gutachten/`, zusammen mit dem Inhalt von `server/web/`. `seite/style.css` ist das gemeinsame Stylesheet aller PoC-Seiten und gehört in den Webroot (`/style.css`). Es legt Farben, Schrift, Kopf und Fuß fest, einschließlich der Akzentfarbe für Schrift (`--akzent-text`), die im hellen Bild mindestens 4,5:1 Kontrast erreicht.
+
+Zum Ansehen ohne Server-Einrichtung genügt ein lokaler Webserver mit derselben Ordnerstruktur:
+
+```bash
+mkdir -p /tmp/poc/afd-gutachten
+cp seite/style.css /tmp/poc/
+cp seite/index.html seite/seite.css seite/seite.js server/web/*.svg server/web/*.png /tmp/poc/afd-gutachten/
+cd /tmp/poc && python3 -m http.server 8000   # http://localhost:8000/afd-gutachten/
+```
 
 ## Platzhalter in der Vorlage
 
@@ -29,6 +38,8 @@ Die Beispielunterhaltungen in `GESPRAECHE` sind echte Antworten der Schnittstell
 - Hell und dunkel nach Systemeinstellung. Auf Bildschirmen mit großem Farbraum gelten kräftigere Farben in Display P3 (`@media (color-gamut: p3)`, `oklch()`).
 - `<meta name="darkreader-lock">`, damit die Erweiterung Dark Reader die Logos nicht unsichtbar umfärbt.
 - Animationen sind dezent und entfallen bei `prefers-reduced-motion`: Tippen der Beispielunterhaltung, wandernde Punkte in „Wie das funktioniert“.
+- Auf dem Smartphone (unter 640 px) klappt ein Knopf „Menü“ die Navigation auf (`aria-expanded`, Escape schließt). Ohne JavaScript bleiben alle Links sichtbar.
+- Kontrast nach WCAG 2.2 AA in hell und dunkel; geprüft in den Breiten 320 bis 1920 px ohne seitliches Scrollen.
 
 ## Zeichen
 

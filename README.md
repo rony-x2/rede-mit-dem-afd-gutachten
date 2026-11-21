@@ -46,7 +46,7 @@ Die Schnittstelle gibt dem Modell Regeln für die Antwort mit: Es soll nur wiede
 | [`aufbereitung/`](aufbereitung) | PDF auslesen, gliedern, in Teile zerlegen, einbetten, mit Fragen anreichern |
 | [`server/lib/`](server/lib) | MCP-Server, Datenbankzugang, Importskripte, Tabellenschema, Zusatzdaten (Art. 21 GG, Angaben zur GFF) |
 | [`server/web/`](server/web) | öffentlicher Teil: Einstieg `mcp.php`, Umleitung, Zeichen und Favicons |
-| [`seite/`](seite) | Projektseite: Vorlage, Bauskript, CSS, JavaScript, Logos |
+| [`seite/`](seite) | Projektseite: gebaute Seite (`index.html`), Vorlage, Bauskript, Diagramme, CSS (auch das gemeinsame `style.css` der PoC-Seite), JavaScript, Logos |
 | [`messung/`](messung) | Testsatz mit 46 Fragen und Skripte für die Suchmessungen |
 | [`docs/`](docs) | ausführliche Dokumentation, Diagramme unter `docs/bilder/` (erzeugt von `seite/diagramm.py`) |
 

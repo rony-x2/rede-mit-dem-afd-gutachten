@@ -12,5 +12,3 @@ logs/
 venv/
 __pycache__/
 
-# gebaute Projektseite (aus seite/vorlage.html mit seite/bauen.py)
-seite/index.html
