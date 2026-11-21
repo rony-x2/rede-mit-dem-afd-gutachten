@@ -70,7 +70,7 @@ Der Modellserver (llama-server, LM Studio) liefert Werkzeugaufrufe nur als Vorsc
 
 **Was nötig wäre**
 
-- Ein Rechner mit leistungsfähiger Grafikkarte, mindestens 24 GB Grafikspeicher. Geeignete Karten gibt es gebraucht ab rund 260 € (siehe [Probelauf](#probelauf)).
+- Ein Rechner mit leistungsfähiger Grafikkarte, mindestens 24 GB Grafikspeicher.
 - Ein Modell mit Werkzeugaufrufen und mindestens 32.000 Token Kontext, weil die Antworten der Schnittstelle lang sein können. In Frage kommen etwa Gemma 4 26B-A4B (Q4_K_M, 17 GB) oder ein Qwen3-Modell.
 - Der Vermittler, als kleines Python- oder PHP-Programm.
 - Eine gesicherte Verbindung vom Webserver zu diesem Rechner, etwa über einen SSH-Tunnel oder WireGuard. Der Rechner muss dauerhaft laufen.
@@ -97,12 +97,12 @@ Die Bedingungen waren für alle vier Läufe gleich:
   <img alt="Balkendiagramm: Sekunden bis zur fertigen Antwort. Tesla P40 mit Gemma 4: 14,6 s; Tesla P40 mit Qwen3.8: 108 s; RTX 4090 mit Gemma 4: 4,3 s; RTX 4090 mit Qwen3.8: 18,5 s." src="bilder/probelauf-hell.svg" width="100%">
 </picture>
 
-| Karte (gebraucht) | Modell | je Antwort (Median) | Antwort beginnt | Fragen/Min. | Werkzeugaufrufe | richtige Fundstelle | Link auf PDF |
+| Karte | Modell | je Antwort (Median) | Antwort beginnt | Fragen/Min. | Werkzeugaufrufe | richtige Fundstelle | Link auf PDF |
 |---|---|---:|---:|---:|---:|---:|---:|
-| Tesla P40, rund 260 € | Gemma 4 26B-A4B | 14,6 s | 5,7 s | ≈ 4 | 1,2 | 8/10 | 1/10 |
-| Tesla P40, rund 260 € | Qwen3.8-27B | 108 s | 65 s | ≈ 0,5 | 5,1 | 8/10 | 9/10 |
-| RTX 4090, rund 2.100 € | Gemma 4 26B-A4B | 4,3 s | 1,6 s | ≈ 14 | 1,3 | 8/10 | 0/10 |
-| RTX 4090, rund 2.100 € | Qwen3.8-27B | 18,5 s | 6,3 s | ≈ 3 | 3,5 | 9/10 | 10/10 |
+| Tesla P40 (ältere Rechenkarte) | Gemma 4 26B-A4B | 14,6 s | 5,7 s | ≈ 4 | 1,2 | 8/10 | 1/10 |
+| Tesla P40 (ältere Rechenkarte) | Qwen3.8-27B | 108 s | 65 s | ≈ 0,5 | 5,1 | 8/10 | 9/10 |
+| RTX 4090 (Spiele-Grafikkarte) | Gemma 4 26B-A4B | 4,3 s | 1,6 s | ≈ 14 | 1,3 | 8/10 | 0/10 |
+| RTX 4090 (Spiele-Grafikkarte) | Qwen3.8-27B | 18,5 s | 6,3 s | ≈ 3 | 3,5 | 9/10 | 10/10 |
 
 **Schnelligkeit:**
 
@@ -113,13 +113,12 @@ Die Bedingungen waren für alle vier Läufe gleich:
 | belegter Grafikspeicher | 17,3 GB | 16,8 GB | ca. 17,5 GB | ca. 17 GB |
 
 **Was auffällt:**
-- **Gemma 4 26B-A4B** ist ein Mixture-of-Experts-Modell: Je Wort rechnet nur ein kleiner Teil seiner Parameter. Es ist deshalb schon auf der günstigen Tesla P40 flott. Es sucht meist nur einmal und antwortet dann direkt aus den Fundstellen, knapp und sauber gegliedert, setzt aber kaum Links auf die PDF-Seite. Mit einer klareren Anweisung ließe sich das vermutlich beheben. Einmal verwies es auf eine falsche Gliederungsnummer.
+- **Gemma 4 26B-A4B** ist ein Mixture-of-Experts-Modell: Je Wort rechnet nur ein kleiner Teil seiner Parameter. Es ist deshalb schon auf der älteren Tesla P40 flott. Es sucht meist nur einmal und antwortet dann direkt aus den Fundstellen, knapp und sauber gegliedert, setzt aber kaum Links auf die PDF-Seite. Mit einer klareren Anweisung ließe sich das vermutlich beheben. Einmal verwies es auf eine falsche Gliederungsnummer.
 - **Qwen3.8-27B** rechnet je Wort alle Parameter. Es recherchiert gründlicher, liest Abschnitte nach, zitiert mehr im Wortlaut und verlinkt fast immer. Auf der P40 ohne Tensor-Kerne ist es dafür sehr langsam. Dort brach es eine Frage nach 16 Werkzeugaufrufen ab, weil es im falschen Teil suchte. Auf der RTX 4090 beantwortete es alle 10 Fragen in unter 25 Sekunden.
 - **Speicher:** Mit 24 GB passt neben dem Modell genau eine Unterhaltung mit 32.000 Token. Mehr Fragen pro Minute bedeuten also kürzere Wartezeiten in der Schlange, nicht mehr gleichzeitige Unterhaltungen.
 
 Die Fundstelle wird automatisch geprüft: Liegt eine zitierte Seite in einem der erwarteten Abschnitte des Testsatzes? Diese Prüfung ist streng. Eine Antwort ohne Seitenzahl gilt dabei als falsch, auch wenn sie inhaltlich stimmt.
 
-Die Preise sind ungefähre Gebrauchtpreise vom November 2026: Für die Tesla P40 sind es rund 260 €. Für die RTX 4090 ist es der Gebrauchtmarktpreis laut [tech-insider.org](https://tech-insider.org/de/?p=841).
 
 ## Checkliste: was beide Wege brauchen
 

@@ -252,11 +252,11 @@ def suche_seite():
 # 10 Testfragen als Chat mit Werkzeugaufrufen (messung/chat_probe.py), Modell vollständig im Grafikspeicher,
 # 32.000 Token Kontext, ohne Denkmodus; Median der Zeit bis zur fertigen Antwort. Gemessen am 21.11.2026.
 PROBELAUF = [
-    # Karte, Preis, Modell, Sekunden (Median), Antwortbeginn, Fragen/Min., richtige Fundstelle, PDF-Links
-    ('Tesla P40', 'gebraucht rund 260 €', 'Gemma 4 26B-A4B', 14.6, 5.7, 4, '8/10', '1/10'),
-    ('Tesla P40', 'gebraucht rund 260 €', 'Qwen3.8-27B', 108.2, 65.3, 0.5, '8/10', '9/10'),
-    ('RTX 4090', 'gebraucht rund 2.100 €', 'Gemma 4 26B-A4B', 4.3, 1.6, 14, '8/10', '0/10'),
-    ('RTX 4090', 'gebraucht rund 2.100 €', 'Qwen3.8-27B', 18.5, 6.3, 3, '9/10', '10/10'),
+    # Karte, Art der Karte, Modell, Sekunden (Median), Antwortbeginn, Fragen/Min., richtige Fundstelle, PDF-Links
+    ('Tesla P40', 'ältere Rechenkarte, 24 GB', 'Gemma 4 26B-A4B', 14.6, 5.7, 4, '8/10', '1/10'),
+    ('Tesla P40', 'ältere Rechenkarte, 24 GB', 'Qwen3.8-27B', 108.2, 65.3, 0.5, '8/10', '9/10'),
+    ('RTX 4090', 'Spiele-Grafikkarte, 24 GB', 'Gemma 4 26B-A4B', 4.3, 1.6, 14, '8/10', '0/10'),
+    ('RTX 4090', 'Spiele-Grafikkarte, 24 GB', 'Qwen3.8-27B', 18.5, 6.3, 3, '9/10', '10/10'),
 ]
 
 
