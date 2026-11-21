@@ -4,7 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rede mit dem AfD-Gutachten – Proof of Concept</title>
-  <meta name="description" content="Das Rechtsgutachten der Gesellschaft für Freiheitsrechte zur AfD mit Claude, ChatGPT, Grok oder einem anderen Assistenten befragen: Einrichtung der MCP-Schnittstelle, Antworten mit Seitenangaben.">
+  <meta name="description" content="Das Rechtsgutachten der Gesellschaft für Freiheitsrechte zur AfD mit Claude, ChatGPT, Grok oder einem lokalen Modell befragen: MCP-Schnittstelle zum vollständigen Text, Antworten mit Seitenangaben und Link auf die Stelle in der PDF.">
+  <link rel="canonical" href="https://poc.deutschkaemer.info/afd-gutachten/">
+  <!-- Open Graph (Vorschau beim Teilen) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="poc.deutschkaemer.info">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Rede mit dem AfD-Gutachten">
+  <meta property="og:description" content="Das Rechtsgutachten der Gesellschaft für Freiheitsrechte zur AfD mit Claude, ChatGPT, Grok oder einem lokalen Modell befragen: MCP-Schnittstelle zum vollständigen Text, Antworten mit Seitenangaben und Link auf die Stelle in der PDF.">
+  <meta property="og:url" content="https://poc.deutschkaemer.info/afd-gutachten/">
+  <meta property="og:image" content="https://poc.deutschkaemer.info/afd-gutachten/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Rede mit dem AfD-Gutachten – das Rechtsgutachten der GFF über eine MCP-Schnittstelle befragen">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="robots" content="noindex">
   <meta name="color-scheme" content="dark light">
   <meta name="darkreader-lock">
@@ -15,6 +29,133 @@
   <script>document.documentElement.classList.add('js')</script>
   <link rel="stylesheet" href="/style.css?v=5">
   <link rel="stylesheet" href="seite.css?v=16">
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://poc.deutschkaemer.info/afd-gutachten/#seite",
+   "url": "https://poc.deutschkaemer.info/afd-gutachten/",
+   "name": "Rede mit dem AfD-Gutachten",
+   "description": "Das Rechtsgutachten der Gesellschaft für Freiheitsrechte zur AfD mit Claude, ChatGPT, Grok oder einem lokalen Modell befragen: MCP-Schnittstelle zum vollständigen Text, Antworten mit Seitenangaben und Link auf die Stelle in der PDF.",
+   "inLanguage": "de",
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://poc.deutschkaemer.info/#website",
+    "name": "Proof of Concepts – Dennis Deutschkämer",
+    "url": "https://poc.deutschkaemer.info/",
+    "author": {
+     "@id": "https://deutschkaemer.info/#person"
+    }
+   },
+   "about": {
+    "@id": "https://poc.deutschkaemer.info/afd-gutachten/#gutachten"
+   },
+   "mainEntity": {
+    "@id": "https://poc.deutschkaemer.info/afd-gutachten/#schnittstelle"
+   },
+   "author": {
+    "@id": "https://deutschkaemer.info/#person"
+   },
+   "primaryImageOfPage": "https://poc.deutschkaemer.info/afd-gutachten/og.png",
+   "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+     {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Proof of Concepts",
+      "item": "https://poc.deutschkaemer.info/"
+     },
+     {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Rede mit dem AfD-Gutachten",
+      "item": "https://poc.deutschkaemer.info/afd-gutachten/"
+     }
+    ]
+   }
+  },
+  {
+   "@type": [
+    "SoftwareApplication",
+    "WebAPI"
+   ],
+   "@id": "https://poc.deutschkaemer.info/afd-gutachten/#schnittstelle",
+   "name": "Rede mit dem AfD-Gutachten (MCP-Schnittstelle)",
+   "url": "https://poc.deutschkaemer.info/afd-gutachten/mcp",
+   "description": "MCP-Server (Model Context Protocol, Streamable HTTP) mit Werkzeugen zum Suchen, Lesen und Zitieren im Gutachten; nur lesend, ohne Anmeldung.",
+   "applicationCategory": "ReferenceApplication",
+   "operatingSystem": "Web",
+   "isAccessibleForFree": true,
+   "inLanguage": "de",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+   },
+   "documentation": "https://github.com/rony-x2/rede-mit-dem-afd-gutachten/blob/main/docs/werkzeuge.md",
+   "isBasedOn": {
+    "@id": "https://poc.deutschkaemer.info/afd-gutachten/#gutachten"
+   },
+   "author": {
+    "@id": "https://deutschkaemer.info/#person"
+   },
+   "provider": {
+    "@id": "https://deutschkaemer.info/#person"
+   }
+  },
+  {
+   "@type": "SoftwareSourceCode",
+   "@id": "https://poc.deutschkaemer.info/afd-gutachten/#quelltext",
+   "name": "rede-mit-dem-afd-gutachten",
+   "codeRepository": "https://github.com/rony-x2/rede-mit-dem-afd-gutachten",
+   "programmingLanguage": [
+    "PHP",
+    "Python",
+    "JavaScript"
+   ],
+   "license": "https://opensource.org/license/mit",
+   "author": {
+    "@id": "https://deutschkaemer.info/#person"
+   },
+   "targetProduct": {
+    "@id": "https://poc.deutschkaemer.info/afd-gutachten/#schnittstelle"
+   }
+  },
+  {
+   "@type": "Report",
+   "@id": "https://poc.deutschkaemer.info/afd-gutachten/#gutachten",
+   "name": "Ist die Alternative für Deutschland verfassungswidrig?",
+   "description": "Rechtsgutachten zur Frage, ob die AfD nach Art. 21 Abs. 2 GG verfassungswidrig ist.",
+   "author": {
+    "@id": "https://freiheitsrechte.org/#organisation"
+   },
+   "publisher": {
+    "@id": "https://freiheitsrechte.org/#organisation"
+   },
+   "datePublished": "2026-06-25",
+   "inLanguage": "de",
+   "url": "https://freiheitsrechte.org/uploads/publications/Demokratie/GFF_AfD-Gutachten.pdf",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://freiheitsrechte.org/#organisation",
+   "name": "Gesellschaft für Freiheitsrechte e.V.",
+   "alternateName": "GFF",
+   "url": "https://freiheitsrechte.org"
+  },
+  {
+   "@type": "Person",
+   "@id": "https://deutschkaemer.info/#person",
+   "name": "Dennis Deutschkämer",
+   "url": "https://deutschkaemer.info"
+  }
+ ]
+}
+  </script>
 </head>
 <body>
   <header class="kopf">

@@ -54,3 +54,9 @@ cd seite && python3 diagramm.py
 ```
 
 feste SVG-Dateien in hell und dunkel nach `docs/bilder/`. Dazu gehört auch das Diagramm zur Suche in `docs/suche.md`.
+
+## Teilen und Suchmaschinen
+
+- **Open Graph** ([ogp.me](https://ogp.me/)): Titel, Beschreibung, Adresse, Sprache und ein Vorschaubild (`server/web/og.png`, 1200 × 630 px, mit Alternativtext) für die Vorschau in Messengern und sozialen Netzwerken. `seite/vorschaubild.py` erzeugt das Bild mit Chromium aus einer kleinen HTML-Vorlage.
+- **schema.org** als JSON-LD ([Einstieg](https://schema.org/docs/gs.html)), erzeugt in `bauen.py` (`schema()`): die Seite (`WebPage` mit Brotkrumen), die Schnittstelle (`SoftwareApplication`/`WebAPI`, kostenlos, nur lesend), der Quelltext (`SoftwareSourceCode`, MIT), das Gutachten (`Report` der GFF, CC BY 4.0) und die beteiligten Personen und Organisationen. Ausgezeichnet ist nur, was auch sichtbar auf der Seite steht.
+- Die Seite trägt `noindex`: Sie ist zum Vorstellen gedacht, nicht für die Suche.

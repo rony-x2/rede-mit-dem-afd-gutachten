@@ -121,6 +121,54 @@ def gespraech(n, g):
           </div>'''
 
 
+SEITE = 'https://poc.deutschkaemer.info/afd-gutachten/'
+GITHUB = 'https://github.com/rony-x2/rede-mit-dem-afd-gutachten'
+BESCHREIBUNG = ('Das Rechtsgutachten der Gesellschaft für Freiheitsrechte zur AfD mit Claude, ChatGPT, Grok oder einem '
+                'lokalen Modell befragen: MCP-Schnittstelle zum vollständigen Text, Antworten mit Seitenangaben und Link '
+                'auf die Stelle in der PDF.')
+
+
+def schema():
+    """Strukturierte Daten nach schema.org (JSON-LD) für die Projektseite."""
+    import json
+    person = {'@type': 'Person', '@id': 'https://deutschkaemer.info/#person', 'name': 'Dennis Deutschkämer',
+              'url': 'https://deutschkaemer.info'}
+    gff = {'@type': 'Organization', '@id': 'https://freiheitsrechte.org/#organisation',
+           'name': 'Gesellschaft für Freiheitsrechte e.V.', 'alternateName': 'GFF', 'url': 'https://freiheitsrechte.org'}
+    gutachten = {'@type': 'Report', '@id': SEITE + '#gutachten',
+                 'name': 'Ist die Alternative für Deutschland verfassungswidrig?',
+                 'description': 'Rechtsgutachten zur Frage, ob die AfD nach Art. 21 Abs. 2 GG verfassungswidrig ist.',
+                 'author': {'@id': gff['@id']}, 'publisher': {'@id': gff['@id']}, 'datePublished': '2026-06-25',
+                 'inLanguage': 'de', 'url': PDF, 'license': 'https://creativecommons.org/licenses/by/4.0/'}
+    schnittstelle = {'@type': ['SoftwareApplication', 'WebAPI'], '@id': SEITE + '#schnittstelle',
+                     'name': 'Rede mit dem AfD-Gutachten (MCP-Schnittstelle)', 'url': ADRESSE,
+                     'description': 'MCP-Server (Model Context Protocol, Streamable HTTP) mit Werkzeugen zum Suchen, '
+                                    'Lesen und Zitieren im Gutachten; nur lesend, ohne Anmeldung.',
+                     'applicationCategory': 'ReferenceApplication', 'operatingSystem': 'Web',
+                     'isAccessibleForFree': True, 'inLanguage': 'de',
+                     'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'EUR'},
+                     'documentation': GITHUB + '/blob/main/docs/werkzeuge.md',
+                     'isBasedOn': {'@id': gutachten['@id']}, 'author': {'@id': person['@id']},
+                     'provider': {'@id': person['@id']}}
+    quelltext = {'@type': 'SoftwareSourceCode', '@id': SEITE + '#quelltext', 'name': 'rede-mit-dem-afd-gutachten',
+                 'codeRepository': GITHUB, 'programmingLanguage': ['PHP', 'Python', 'JavaScript'],
+                 'license': 'https://opensource.org/license/mit', 'author': {'@id': person['@id']},
+                 'targetProduct': {'@id': schnittstelle['@id']}}
+    seite = {'@type': 'WebPage', '@id': SEITE + '#seite', 'url': SEITE, 'name': 'Rede mit dem AfD-Gutachten',
+             'description': BESCHREIBUNG, 'inLanguage': 'de',
+             'isPartOf': {'@type': 'WebSite', '@id': 'https://poc.deutschkaemer.info/#website',
+                          'name': 'Proof of Concepts – Dennis Deutschkämer', 'url': 'https://poc.deutschkaemer.info/',
+                          'author': {'@id': person['@id']}},
+             'about': {'@id': gutachten['@id']}, 'mainEntity': {'@id': schnittstelle['@id']},
+             'author': {'@id': person['@id']}, 'primaryImageOfPage': SEITE + 'og.png',
+             'breadcrumb': {'@type': 'BreadcrumbList', 'itemListElement': [
+                 {'@type': 'ListItem', 'position': 1, 'name': 'Proof of Concepts', 'item': 'https://poc.deutschkaemer.info/'},
+                 {'@type': 'ListItem', 'position': 2, 'name': 'Rede mit dem AfD-Gutachten', 'item': SEITE}]}}
+    daten = {'@context': 'https://schema.org', '@graph': [seite, schnittstelle, quelltext, gutachten, gff, person]}
+    roh = json.dumps(daten, ensure_ascii=False, indent=1).replace('</', '<\\/')
+    return '  <script type="application/ld+json">\n' + roh + '\n  </script>'
+
+
 text = (HIER / 'vorlage.html').read_text(encoding='utf-8')
 text = text.replace('{{GESPRAECHE}}', '\n'.join(gespraech(n, g) for n, g in enumerate(GESPRAECHE)))
 text = text.replace('{{PUNKTE}}', '\n'.join(
@@ -128,6 +176,8 @@ text = text.replace('{{PUNKTE}}', '\n'.join(
     for n in range(len(GESPRAECHE))))
 text = text.replace('{{BEISPIELE}}', '\n'.join(
     f'          <li>{ikon("frage")}<span>{h(b)}</span></li>' for b in BEISPIELE))
+text = text.replace('{{SCHEMA}}', schema())
+text = text.replace('{{BESCHREIBUNG}}', h(BESCHREIBUNG))
 text = text.replace('{{ADRESSE}}', ADRESSE)
 text = text.replace('{{DIAGRAMM}}', diagramm_seite())
 text = text.replace('{{SUCHE}}', suche_seite())
